@@ -1,0 +1,76 @@
+{
+  "app": {
+    "name": "DOC PROOF",
+    "tagline": "区块链文件认证平台"
+  },
+  "nav": {
+    "home": "首页",
+    "upload": "上传文件",
+    "verify": "验证",
+    "dashboard": "控制台",
+    "admin": "管理",
+    "settings": "设置",
+    "logout": "退出",
+    "login": "登录",
+    "register": "注册"
+  },
+  "upload": {
+    "title": "上传文件",
+    "dropzone": "将文件拖放到此处或点击浏览",
+    "processing": "正在处理文件...",
+    "generatingHash": "正在生成哈希...",
+    "uploadingIpfs": "正在上传到 IPFS...",
+    "registeringChain": "正在注册到区块链...",
+    "success": "文件认证成功！",
+    "error": "上传失败"
+  },
+  "verify": {
+    "title": "验证文件",
+    "subtitle": "输入文件哈希或扫描二维码",
+    "hashPlaceholder": "粘贴文件哈希 (0x...)",
+    "verify": "验证",
+    "valid": "文件已认证且有效",
+    "invalid": "未找到文件或已撤销",
+    "issuer": "签发方",
+    "timestamp": "认证时间",
+    "blockchain": "在区块链上查看"
+  },
+  "dashboard": {
+    "myDocuments": "我的文件",
+    "recentVerifications": "最近验证",
+    "analytics": "分析"
+  },
+  "admin": {
+    "maintenance": "维护模式",
+    "organizations": "组织",
+    "users": "用户",
+    "blockchain": "区块链配置",
+    "analytics": "分析",
+    "fraudReports": "AI 欺诈报告",
+    "themeDefaults": "默认主题",
+    "languages": "语言",
+    "suspendUser": "暂停用户"
+  },
+  "theme": {
+    "selectTheme": "外观",
+    "dark": "深色",
+    "retro": "复古",
+    "cyberpunk": "赛博朋克",
+    "coffee": "咖啡",
+    "valentine": "情人节",
+    "business": "商务",
+    "light": "浅色"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "发生错误",
+    "success": "成功",
+    "cancel": "取消",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "download": "下载",
+    "copy": "复制",
+    "qrCode": "二维码"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "app": {
+    "name": "DOC PROOF",
+    "tagline": "Blockchain Document Certification Platform"
+  },
+  "nav": {
+    "home": "Home",
+    "upload": "Upload Document",
+    "verify": "Verify",
+    "dashboard": "Dashboard",
+    "admin": "Admin",
+    "settings": "Settings",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Register"
+  },
+  "upload": {
+    "title": "Upload Document",
+    "dropzone": "Drop your document here or click to browse",
+    "processing": "Processing document...",
+    "generatingHash": "Generating hash...",
+    "uploadingIpfs": "Uploading to IPFS...",
+    "registeringChain": "Registering on blockchain...",
+    "success": "Document certified successfully!",
+    "error": "Upload failed"
+  },
+  "verify": {
+    "title": "Verify Document",
+    "subtitle": "Enter document hash or scan QR code",
+    "hashPlaceholder": "Paste document hash (0x...)",
+    "verify": "Verify",
+    "valid": "Document is certified and valid",
+    "invalid": "Document not found or has been revoked",
+    "issuer": "Issuer",
+    "timestamp": "Certified at",
+    "blockchain": "View on blockchain"
+  },
+  "dashboard": {
+    "myDocuments": "My Documents",
+    "recentVerifications": "Recent Verifications",
+    "analytics": "Analytics"
+  },
+  "admin": {
+    "maintenance": "Maintenance Mode",
+    "organizations": "Organizations",
+    "users": "Users",
+    "blockchain": "Blockchain Config",
+    "analytics": "Analytics",
+    "fraudReports": "AI Fraud Reports",
+    "themeDefaults": "Theme Defaults",
+    "languages": "Languages",
+    "suspendUser": "Suspend User"
+  },
+  "theme": {
+    "selectTheme": "Appearance",
+    "dark": "Dark",
+    "retro": "Retro",
+    "cyberpunk": "Cyberpunk",
+    "coffee": "Coffee",
+    "valentine": "Valentine",
+    "business": "Business",
+    "light": "Light"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "download": "Download",
+    "copy": "Copy",
+    "qrCode": "QR Code"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "app": {
+    "name": "DOC PROOF",
+    "tagline": "منصة توثيق المستندات بالبلوكتشين"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "upload": "رفع مستند",
+    "verify": "التحقق",
+    "dashboard": "لوحة التحكم",
+    "admin": "الإدارة",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج",
+    "login": "تسجيل الدخول",
+    "register": "التسجيل"
+  },
+  "upload": {
+    "title": "رفع مستند",
+    "dropzone": "اسحب المستند هنا أو انقر للتصفح",
+    "processing": "معالجة المستند...",
+    "generatingHash": "إنشاء التجزئة...",
+    "uploadingIpfs": "الرفع إلى IPFS...",
+    "registeringChain": "التسجيل على البلوكشين...",
+    "success": "تم توثيق المستند بنجاح!",
+    "error": "فشل الرفع"
+  },
+  "verify": {
+    "title": "التحقق من المستند",
+    "subtitle": "أدخل تجزئة المستند أو امسح رمز QR",
+    "hashPlaceholder": "الصق تجزئة المستند (0x...)",
+    "verify": "تحقق",
+    "valid": "المستند موثق وصالح",
+    "invalid": "المستند غير موجود أو تم إبطاله",
+    "issuer": "المُصدر",
+    "timestamp": "تم التوثيق في",
+    "blockchain": "عرض على البلوكشين"
+  },
+  "dashboard": {
+    "myDocuments": "مستنداتي",
+    "recentVerifications": "عمليات التحقق الأخيرة",
+    "analytics": "التحليلات"
+  },
+  "admin": {
+    "maintenance": "وضع الصيانة",
+    "organizations": "المؤسسات",
+    "users": "المستخدمون",
+    "blockchain": "إعدادات البلوكشين",
+    "analytics": "التحليلات",
+    "fraudReports": "تقارير الاحتيال بالذكاء الاصطناعي",
+    "themeDefaults": "المظهر الافتراضي",
+    "languages": "اللغات",
+    "suspendUser": "تعليق المستخدم"
+  },
+  "theme": {
+    "selectTheme": "المظهر",
+    "dark": "داكن",
+    "retro": "رجعي",
+    "cyberpunk": "سايبربانك",
+    "coffee": "قهوة",
+    "valentine": "عيد الحب",
+    "business": "عمل",
+    "light": "فاتح"
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "success": "نجاح",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "download": "تحميل",
+    "copy": "نسخ",
+    "qrCode": "رمز QR"
+  }
+}

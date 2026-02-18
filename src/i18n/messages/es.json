@@ -1,0 +1,76 @@
+{
+  "app": {
+    "name": "DOC PROOF",
+    "tagline": "Plataforma de certificación de documentos blockchain"
+  },
+  "nav": {
+    "home": "Inicio",
+    "upload": "Subir documento",
+    "verify": "Verificar",
+    "dashboard": "Panel",
+    "admin": "Administración",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión",
+    "login": "Iniciar sesión",
+    "register": "Registrarse"
+  },
+  "upload": {
+    "title": "Subir documento",
+    "dropzone": "Arrastra tu documento aquí o haz clic para buscar",
+    "processing": "Procesando documento...",
+    "generatingHash": "Generando hash...",
+    "uploadingIpfs": "Subiendo a IPFS...",
+    "registeringChain": "Registrando en blockchain...",
+    "success": "¡Documento certificado con éxito!",
+    "error": "Error al subir"
+  },
+  "verify": {
+    "title": "Verificar documento",
+    "subtitle": "Introduce el hash del documento o escanea el código QR",
+    "hashPlaceholder": "Pega el hash del documento (0x...)",
+    "verify": "Verificar",
+    "valid": "El documento está certificado y es válido",
+    "invalid": "Documento no encontrado o revocado",
+    "issuer": "Emisor",
+    "timestamp": "Certificado el",
+    "blockchain": "Ver en blockchain"
+  },
+  "dashboard": {
+    "myDocuments": "Mis documentos",
+    "recentVerifications": "Verificaciones recientes",
+    "analytics": "Analíticas"
+  },
+  "admin": {
+    "maintenance": "Modo mantenimiento",
+    "organizations": "Organizaciones",
+    "users": "Usuarios",
+    "blockchain": "Config blockchain",
+    "analytics": "Analíticas",
+    "fraudReports": "Informes de fraude IA",
+    "themeDefaults": "Temas por defecto",
+    "languages": "Idiomas",
+    "suspendUser": "Suspender usuario"
+  },
+  "theme": {
+    "selectTheme": "Apariencia",
+    "dark": "Oscuro",
+    "retro": "Retro",
+    "cyberpunk": "Cyberpunk",
+    "coffee": "Café",
+    "valentine": "Valentín",
+    "business": "Negocios",
+    "light": "Claro"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "success": "Éxito",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "download": "Descargar",
+    "copy": "Copiar",
+    "qrCode": "Código QR"
+  }
+}

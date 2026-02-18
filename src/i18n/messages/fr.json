@@ -1,0 +1,76 @@
+{
+  "app": {
+    "name": "DOC PROOF",
+    "tagline": "Plateforme de certification de documents blockchain"
+  },
+  "nav": {
+    "home": "Accueil",
+    "upload": "Télécharger un document",
+    "verify": "Vérifier",
+    "dashboard": "Tableau de bord",
+    "admin": "Administration",
+    "settings": "Paramètres",
+    "logout": "Déconnexion",
+    "login": "Connexion",
+    "register": "Inscription"
+  },
+  "upload": {
+    "title": "Télécharger un document",
+    "dropzone": "Déposez votre document ici ou cliquez pour parcourir",
+    "processing": "Traitement du document...",
+    "generatingHash": "Génération du hash...",
+    "uploadingIpfs": "Téléversement vers IPFS...",
+    "registeringChain": "Enregistrement sur la blockchain...",
+    "success": "Document certifié avec succès !",
+    "error": "Échec du téléversement"
+  },
+  "verify": {
+    "title": "Vérifier un document",
+    "subtitle": "Entrez le hash du document ou scannez le code QR",
+    "hashPlaceholder": "Collez le hash du document (0x...)",
+    "verify": "Vérifier",
+    "valid": "Le document est certifié et valide",
+    "invalid": "Document introuvable ou révoqué",
+    "issuer": "Émetteur",
+    "timestamp": "Certifié le",
+    "blockchain": "Voir sur la blockchain"
+  },
+  "dashboard": {
+    "myDocuments": "Mes documents",
+    "recentVerifications": "Vérifications récentes",
+    "analytics": "Analytiques"
+  },
+  "admin": {
+    "maintenance": "Mode maintenance",
+    "organizations": "Organisations",
+    "users": "Utilisateurs",
+    "blockchain": "Config blockchain",
+    "analytics": "Analytiques",
+    "fraudReports": "Rapports de fraude IA",
+    "themeDefaults": "Thèmes par défaut",
+    "languages": "Langues",
+    "suspendUser": "Suspendre l'utilisateur"
+  },
+  "theme": {
+    "selectTheme": "Apparence",
+    "dark": "Sombre",
+    "retro": "Rétro",
+    "cyberpunk": "Cyberpunk",
+    "coffee": "Café",
+    "valentine": "Valentin",
+    "business": "Business",
+    "light": "Clair"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "download": "Télécharger",
+    "copy": "Copier",
+    "qrCode": "Code QR"
+  }
+}

@@ -1,0 +1,167 @@
+// DOC PROOF - Prisma Schema
+// Enterprise-grade blockchain document certification platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============= USER & AUTH =============
+enum Role {
+  SUPER_ADMIN
+  ORG_ADMIN
+  VERIFIER
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  PENDING_2FA
+}
+
+model User {
+  id                String      @id @default(cuid())
+  email             String      @unique
+  passwordHash      String      @map("password_hash")
+  name              String?
+  walletAddress     String?     @unique @map("wallet_address")
+  role              Role        @default(USER)
+  status            UserStatus  @default(ACTIVE)
+  organizationId    String?     @map("organization_id")
+  twoFactorEnabled  Boolean     @default(false) @map("two_factor_enabled")
+  twoFactorSecret   String?     @map("two_factor_secret")
+  preferredLanguage String      @default("en") @map("preferred_language")
+  preferredTheme    String      @default("dark") @map("preferred_theme")
+  createdAt         DateTime    @default(now()) @map("created_at")
+  updatedAt         DateTime    @updatedAt @map("updated_at")
+  lastLoginAt       DateTime?   @map("last_login_at")
+
+  organization   Organization?   @relation(fields: [organizationId], references: [id])
+  documents      Document[]
+  verifications  Verification[]
+  auditLogs      AuditLog[]
+  sessions       Session[]
+  apiKeys        ApiKey[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String   @map("user_id")
+  token        String   @unique
+  expiresAt    DateTime @map("expires_at")
+  userAgent    String?  @map("user_agent")
+  ipAddress    String?  @map("ip_address")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ApiKey {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  name        String
+  keyHash     String   @map("key_hash")
+  prefix      String
+  lastUsedAt  DateTime? @map("last_used_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ============= ORGANIZATION =============
+model Organization {
+  id              String   @id @default(cuid())
+  name            String
+  slug            String   @unique
+  walletAddress   String?  @map("wallet_address")
+  description     String?
+  logoUrl         String?  @map("logo_url")
+  isActive        Boolean  @default(true) @map("is_active")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  users     User[]
+  documents Document[]
+}
+
+// ============= DOCUMENT =============
+enum DocumentStatus {
+  PENDING
+  CERTIFIED
+  REVOKED
+  FAILED
+}
+
+model Document {
+  id                  String         @id @default(cuid())
+  organizationId      String?        @map("organization_id")
+  userId              String         @map("user_id")
+  originalHash        String         @map("original_hash")
+  ipfsCid             String?        @map("ipfs_cid")
+  ipfsEncryptedCid    String?        @map("ipfs_encrypted_cid")
+  blockchainTxHash    String?        @map("blockchain_tx_hash")
+  blockchainBlock     Int?           @map("blockchain_block")
+  issuerAddress      String         @map("issuer_address")
+  status              DocumentStatus @default(PENDING)
+  fileName            String         @map("file_name")
+  fileSize            Int            @map("file_size")
+  mimeType            String         @map("mime_type")
+  isNft               Boolean        @default(false) @map("is_nft")
+  nftTokenId          String?        @map("nft_token_id")
+  metadata            Json?
+  aiAnalysis          Json?          @map("ai_analysis")
+  aiFraudScore        Float?         @map("ai_fraud_score")
+  revokedAt           DateTime?      @map("revoked_at")
+  revocationReason    String?        @map("revocation_reason")
+  certifiedAt         DateTime?      @map("certified_at")
+  createdAt           DateTime       @default(now()) @map("created_at")
+  updatedAt           DateTime       @updatedAt @map("updated_at")
+
+  user         User          @relation(fields: [userId], references: [id])
+  organization Organization? @relation(fields: [organizationId], references: [id])
+  verifications Verification[]
+}
+
+// ============= VERIFICATION =============
+model Verification {
+  id           String   @id @default(cuid())
+  documentId   String   @map("document_id")
+  userId       String?  @map("user_id")
+  hash         String
+  isValid      Boolean  @map("is_valid")
+  verificationMethod String @map("verification_method") // qr, api, manual
+  ipAddress    String?  @map("ip_address")
+  userAgent   String?  @map("user_agent")
+  metadata    Json?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  document Document @relation(fields: [documentId], references: [id])
+  user     User?    @relation(fields: [userId], references: [id])
+}
+
+// ============= SYSTEM =============
+model SystemConfig {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       Json
+  description String?
+  updatedAt   DateTime @updatedAt @map("updated_at")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?  @map("user_id")
+  action     String
+  resource   String
+  resourceId String?  @map("resource_id")
+  metadata   Json?
+  ipAddress  String?  @map("ip_address")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id])
+}

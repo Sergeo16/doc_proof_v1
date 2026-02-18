@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Premium futuristic styling */
+.gradient-border {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--p) / 0.5),
+    hsl(var(--s) / 0.5)
+  );
+  padding: 1px;
+  border-radius: var(--rounded-box);
+}
+
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--p)),
+    hsl(var(--s))
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-card {
+  @apply backdrop-blur-xl border border-base-300;
+  background-color: oklch(var(--b2) / 0.6);
+}
