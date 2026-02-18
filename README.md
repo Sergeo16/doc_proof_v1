@@ -44,7 +44,7 @@ npx prisma migrate dev
 npx prisma db seed
 
 # Run
-npm run dev
+
 ```
 
 Visit http://localhost:3000
@@ -94,6 +94,23 @@ git add .
 git commit -m "Description des changements"
 git push
 ```
+
+**Erreur « Large files detected » (node_modules, .next > 100 MB)** :
+
+Si GitHub refuse le push, c'est que `node_modules` ou `.next` ont été commités. Procédure de correction :
+
+```bash
+# Réinitialiser l'historique et créer un commit propre
+rm -rf .next
+git update-ref -d HEAD
+git reset
+git add .
+git status   # vérifier qu'il n'y a pas node_modules, .next, .env
+git commit -m "Initial commit: DOC PROOF platform"
+git push -u origin main --force
+```
+
+Le `.gitignore` doit exclure `node_modules/`, `.next/`, `.env`.
 
 **Default Admin**: admin@docproof.io / Admin123!
 
