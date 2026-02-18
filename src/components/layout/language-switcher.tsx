@@ -1,32 +1,27 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { Link, usePathname, getPathWithoutLocale } from "@/i18n/routing";
 import { useRef } from "react";
 
-const LOCALES = ["en", "fr", "zh", "ar", "es"];
 const LANGUAGES = [
-  { code: "en", label: "English" },
-  { code: "fr", label: "Français" },
-  { code: "zh", label: "中文" },
-  { code: "ar", label: "العربية" },
-  { code: "es", label: "Español" },
+  { code: "en" as const, label: "English" },
+  { code: "fr" as const, label: "Français" },
+  { code: "zh" as const, label: "中文" },
+  { code: "ar" as const, label: "العربية" },
+  { code: "es" as const, label: "Español" },
 ];
 
 export function LanguageSwitcher() {
   const locale = useLocale();
-  const fullPath = usePathname() ?? "";
+  const pathname = usePathname();
+  const pathWithoutLocale = getPathWithoutLocale(pathname || "/");
   const toggleRef = useRef<HTMLLabelElement>(null);
 
   const closeDropdown = () => {
     (document.activeElement as HTMLElement)?.blur();
     toggleRef.current?.blur();
   };
-
-  // Strip ALL locale segments, build clean path
-  const segments = fullPath.split("/").filter((p) => p && !LOCALES.includes(p));
-  const pathOnly = segments.length ? "/" + segments.join("/") : "/";
 
   return (
     <div className="dropdown dropdown-end">
@@ -61,10 +56,7 @@ export function LanguageSwitcher() {
             {locale === lang.code ? (
               <span className="active cursor-default">{lang.label}</span>
             ) : (
-              <Link
-                href={`/${lang.code}${pathOnly === "/" ? "" : pathOnly}`}
-                onClick={closeDropdown}
-              >
+              <Link href={pathWithoutLocale} locale={lang.code} onClick={closeDropdown}>
                 {lang.label}
               </Link>
             )}

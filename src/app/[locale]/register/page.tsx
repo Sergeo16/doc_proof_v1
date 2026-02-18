@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { register } from "@/actions/auth";
@@ -92,7 +92,7 @@ export default function RegisterPage() {
           </form>
           <p className="text-center text-sm opacity-70 mt-4">
             Already have an account?{" "}
-            <Link href={`/${locale}/login`} className="link link-primary">
+            <Link href="/login" className="link link-primary">
               {t("login")}
             </Link>
           </p>

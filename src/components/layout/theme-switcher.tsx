@@ -1,19 +1,12 @@
 "use client";
 
-import { useTheme } from "next-themes";
+import { useTheme } from "@/components/providers/theme-provider";
 import { useTranslations } from "next-intl";
 import { useEffect, useState, useRef } from "react";
 
 const THEMES = [
   { id: "dark", color: "bg-neutral" },
-  { id: "retro", color: "bg-amber-200" },
-  { id: "cyberpunk", color: "bg-cyan-400" },
-  { id: "coffee", color: "bg-amber-900" },
-  { id: "valentine", color: "bg-pink-300" },
-  { id: "business", color: "bg-slate-600" },
   { id: "light", color: "bg-base-100" },
-  { id: "synthwave", color: "bg-fuchsia-500" },
-  { id: "night", color: "bg-indigo-950" },
 ];
 
 export function ThemeSwitcher() {

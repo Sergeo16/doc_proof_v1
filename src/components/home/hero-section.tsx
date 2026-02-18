@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 import { motion } from "framer-motion";
 
 interface HeroSectionProps {
@@ -9,7 +10,9 @@ interface HeroSectionProps {
   locale: string;
 }
 
-export function HeroSection({ appName, tagline, locale }: HeroSectionProps) {
+export function HeroSection({ appName, tagline }: HeroSectionProps) {
+  const t = useTranslations("app");
+
   return (
     <div className="hero min-h-[80vh]">
       <div className="hero-content flex-col lg:flex-row-reverse gap-12">
@@ -28,9 +31,9 @@ export function HeroSection({ appName, tagline, locale }: HeroSectionProps) {
                 <span className="text-4xl">📄</span>
               </div>
               <p className="font-mono text-sm text-base-content/70">
-                Document Hash: 0x7a3f...
+                {t("documentHash")}: 0x7a3f...
               </p>
-              <div className="badge badge-success badge-lg">✓ Certified</div>
+              <div className="badge badge-success badge-lg">✓ {t("certified")}</div>
             </div>
           </div>
         </motion.div>
@@ -43,17 +46,13 @@ export function HeroSection({ appName, tagline, locale }: HeroSectionProps) {
         >
           <h1 className="text-5xl font-bold gradient-text">{appName}</h1>
           <p className="py-6 text-xl opacity-90">{tagline}</p>
-          <p className="text-base-content/80 mb-8">
-            Enterprise-grade blockchain certification for governments,
-            universities, banks, and international institutions. Immutable proof
-            of document integrity on Polygon.
-          </p>
+          <p className="text-base-content/80 mb-8">{t("heroDescription")}</p>
           <div className="flex flex-wrap gap-4">
-            <Link href={`/${locale}/upload`} className="btn btn-primary btn-lg">
-              Certify Document
+            <Link href="/upload" className="btn btn-primary btn-lg">
+              {t("certifyDocument")}
             </Link>
-            <Link href={`/${locale}/verify`} className="btn btn-outline btn-lg">
-              Verify Document
+            <Link href="/verify" className="btn btn-outline btn-lg">
+              {t("verifyDocument")}
             </Link>
           </div>
         </motion.div>

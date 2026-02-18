@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { login } from "@/actions/auth";
@@ -75,7 +75,7 @@ export default function LoginPage() {
           </form>
           <p className="text-center text-sm opacity-70 mt-4">
             No account?{" "}
-            <Link href={`/${locale}/register`} className="link link-primary">
+            <Link href="/register" className="link link-primary">
               {t("register")}
             </Link>
           </p>

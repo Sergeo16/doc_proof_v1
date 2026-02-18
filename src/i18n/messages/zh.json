@@ -1,7 +1,12 @@
 {
   "app": {
     "name": "DOC PROOF",
-    "tagline": "区块链文件认证平台"
+    "tagline": "区块链文件认证平台",
+    "heroDescription": "面向政府、大学、银行和国际机构的专业区块链认证。Polygon 上不可篡改的文件完整性证明。",
+    "certifyDocument": "认证文件",
+    "verifyDocument": "验证文件",
+    "documentHash": "文件哈希",
+    "certified": "已认证"
   },
   "nav": {
     "home": "首页",

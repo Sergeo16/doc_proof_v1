@@ -1,7 +1,12 @@
 {
   "app": {
     "name": "DOC PROOF",
-    "tagline": "Blockchain Document Certification Platform"
+    "tagline": "Blockchain Document Certification Platform",
+    "heroDescription": "Enterprise-grade blockchain certification for governments, universities, banks, and international institutions. Immutable proof of document integrity on Polygon.",
+    "certifyDocument": "Certify Document",
+    "verifyDocument": "Verify Document",
+    "documentHash": "Document Hash",
+    "certified": "Certified"
   },
   "nav": {
     "home": "Home",

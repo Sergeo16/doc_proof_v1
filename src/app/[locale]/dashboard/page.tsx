@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
@@ -32,20 +32,20 @@ export default async function DashboardPage({
       <h1 className="text-4xl font-bold gradient-text mb-8">Dashboard</h1>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <Link href={`/${locale}/upload`} className="card glass-card hover:border-primary/50 transition-colors">
+        <Link href="/upload" className="card glass-card hover:border-primary/50 transition-colors">
           <div className="card-body">
             <h2 className="card-title">Upload Document</h2>
             <p className="opacity-80">Certify a new document on the blockchain</p>
           </div>
         </Link>
-        <Link href={`/${locale}/verify`} className="card glass-card hover:border-primary/50 transition-colors">
+        <Link href="/verify" className="card glass-card hover:border-primary/50 transition-colors">
           <div className="card-body">
             <h2 className="card-title">Verify Document</h2>
             <p className="opacity-80">Verify document integrity by hash</p>
           </div>
         </Link>
         {session.role === "SUPER_ADMIN" && (
-          <Link href={`/${locale}/admin`} className="card glass-card hover:border-primary/50 transition-colors">
+          <Link href="/admin" className="card glass-card hover:border-primary/50 transition-colors">
             <div className="card-body">
               <h2 className="card-title">Admin Panel</h2>
               <p className="opacity-80">Super Admin control center</p>

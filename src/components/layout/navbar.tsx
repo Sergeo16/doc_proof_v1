@@ -1,8 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import Link from "next/link";
-import { usePathname } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
 import { ThemeSwitcher } from "./theme-switcher";
 import { LanguageSwitcher } from "./language-switcher";
 import { motion } from "framer-motion";
@@ -16,17 +15,16 @@ interface NavbarProps {
 export function Navbar({ locale, session }: NavbarProps) {
   const t = useTranslations("nav");
   const pathname = usePathname();
-  const base = `/${locale}`;
 
   const navLinks = [
-    { href: base, label: t("home") },
-    { href: `${base}/upload`, label: t("upload") },
-    { href: `${base}/verify`, label: t("verify") },
-    { href: `${base}/dashboard`, label: t("dashboard") },
+    { href: "/", label: t("home") },
+    { href: "/upload", label: t("upload") },
+    { href: "/verify", label: t("verify") },
+    { href: "/dashboard", label: t("dashboard") },
   ];
 
   if (session?.role === "SUPER_ADMIN") {
-    navLinks.push({ href: `${base}/admin`, label: t("admin") });
+    navLinks.push({ href: "/admin", label: t("admin") });
   }
 
   return (
@@ -36,7 +34,7 @@ export function Navbar({ locale, session }: NavbarProps) {
       className="navbar glass-card sticky top-0 z-50"
     >
       <div className="navbar-start">
-        <Link href={base} className="btn btn-ghost text-xl font-bold gradient-text">
+        <Link href="/" className="btn btn-ghost text-xl font-bold gradient-text">
           DOC PROOF
         </Link>
       </div>
@@ -48,8 +46,7 @@ export function Navbar({ locale, session }: NavbarProps) {
               <Link
                 href={link.href}
                 className={
-                  (pathname === "/" && link.href === base) ||
-                  pathname === link.href.replace(base, "").replace(/^$/, "/")
+                  pathname === link.href || (pathname === "/" && link.href === "/")
                     ? "active font-semibold"
                     : "hover:bg-base-300/50"
                 }
@@ -76,10 +73,10 @@ export function Navbar({ locale, session }: NavbarProps) {
           </>
         ) : (
           <>
-            <Link href={`${base}/login`} className="btn btn-ghost">
+            <Link href="/login" className="btn btn-ghost">
               {t("login")}
             </Link>
-            <Link href={`${base}/register`} className="btn btn-primary">
+            <Link href="/register" className="btn btn-primary">
               {t("register")}
             </Link>
           </>
