@@ -44,7 +44,7 @@ npx prisma migrate dev
 npx prisma db seed
 
 # Run
-
+ npm run dev
 ```
 
 Visit http://localhost:3000
