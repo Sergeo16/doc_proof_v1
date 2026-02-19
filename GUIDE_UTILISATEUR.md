@@ -30,9 +30,27 @@ Sans cette configuration, les documents sont seulement enregistrés en base (sta
 
 ### 1. Créer un portefeuille (wallet) pour la plateforme
 
-- Installez **MetaMask** (ou un autre portefeuille compatible Ethereum/Polygon).
-- Créez ou importez un compte. **Ce compte sera utilisé pour déployer le contrat et signer les certifications** (il ne doit **pas** être utilisé pour des usages personnels sensibles).
-- Exportez la **clé privée** (MetaMask : Détails du compte → Exporter la clé privée). Vous en aurez besoin pour `PRIVATE_KEY` dans `.env`.
+**À faire dans cet ordre :**
+
+1. **Télécharger MetaMask (extension navigateur)**  
+   - Page officielle : **[https://metamask.io/](https://metamask.io/)**  
+   - Cliquez sur **« Get MetaMask »** puis choisissez votre navigateur (Chrome, Firefox, Edge ou Brave). Vous serez redirigé vers le store du navigateur.  
+   - Guide d’installation détaillé (FR) : [https://support.metamask.io/fr/start/getting-started-with-metamask/](https://support.metamask.io/fr/start/getting-started-with-metamask/)
+
+2. **Créer un nouveau compte ou en importer un**  
+   - **Nouveau compte** : à l’ouverture de MetaMask, choisissez **« Créer un portefeuille »**. Suivez l’assistant (phrase de récupération secrète à noter et conserver en lieu sûr).  
+     → Guide : [https://support.metamask.io/fr/start/creating-a-new-wallet/](https://support.metamask.io/fr/start/creating-a-new-wallet/)  
+   - **Compte existant** : choisissez **« Importer un portefeuille »** et entrez votre phrase de récupération.  
+     → Guide : [https://support.metamask.io/fr/start/use-an-existing-wallet/](https://support.metamask.io/fr/start/use-an-existing-wallet/)  
+   - **Important** : ce compte sera utilisé **uniquement** pour déployer le contrat et signer les certifications DOC PROOF. Ne l’utilisez pas pour des usages personnels sensibles.
+
+3. **Exporter la clé privée** (pour la variable `PRIVATE_KEY` du `.env`)  
+   - Dans MetaMask : cliquez sur le **sélecteur de compte** (en haut).  
+   - Cliquez sur les **trois points verticaux** à côté du compte, puis **« Détails du compte »** (ou « Account details »).  
+   - Cliquez sur **« Exporter la clé privée »** (« Private key »), saisissez votre mot de passe MetaMask et validez.  
+   - Maintenez **« Maintenir pour révéler la clé privée »** (« Hold to reveal Private Key »), puis copiez la clé. Collez-la dans le `.env` pour `PRIVATE_KEY` (avec ou sans le préfixe `0x` selon la doc du projet).  
+   - **Sécurité** : ne partagez jamais cette clé et ne la commitez pas dans le dépôt.  
+   - Référence : [https://support.metamask.io/configure/accounts/how-to-export-an-accounts-private-key](https://support.metamask.io/configure/accounts/how-to-export-an-accounts-private-key)
 
 ### 2. Obtenir des MATIC de test (réseau testnet Mumbai)
 
