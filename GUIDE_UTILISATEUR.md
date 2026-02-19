@@ -4,7 +4,109 @@
 
 DOC PROOF est une plateforme de **certification blockchain de documents**. Elle permet de prouver de manière immuable l’authenticité et l’intégrité d’un document en enregistrant son empreinte (hash) sur la blockchain Polygon.
 
+
+----------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------
+
+## Pourquoi « Document introuvable ou révoqué » et « Émetteur : 0x0 » ?
+
+Si, après avoir **téléchargé** un document puis **vérifié** son hash, vous voyez :
+
+- **« Document introuvable ou révoqué »**
+- **« Émetteur : 0x0 »**
+
+c’est en général parce que la **blockchain n’est pas encore correctement configurée** dans le fichier `.env`. Dans ce cas :
+
+1. **À l’upload** : le document est bien enregistré en base (hash, métadonnées), mais l’appel au smart contract échoue (adresse de contrat ou clé privée manquantes/invalides). Le document reste en statut **PENDING** et l’émetteur est enregistré comme `0x0`.
+2. **À la vérification** : la plateforme interroge le contrat sur la blockchain ; si le contrat n’est pas déployé ou que l’adresse dans `.env` est un placeholder (`0x...`), le hash n’est pas trouvé sur la chaîne, donc le document est considéré comme invalide et l’émetteur affiché reste `0x0`.
+
+**Pour que certification et vérification fonctionnent vraiment**, il faut remplir le `.env` avec de **vraies valeurs** (réseau, contrat déployé, clé de signature). La section suivante détaille quoi faire exactement.
+
 ---
+
+## Configuration du `.env` pour certification et vérification réelles
+
+Sans cette configuration, les documents sont seulement enregistrés en base (statut PENDING) et la vérification affiche « introuvable ou révoqué » / « Émetteur : 0x0 ». Voici ce qu’il faut faire.
+
+### 1. Créer un portefeuille (wallet) pour la plateforme
+
+- Installez **MetaMask** (ou un autre portefeuille compatible Ethereum/Polygon).
+- Créez ou importez un compte. **Ce compte sera utilisé pour déployer le contrat et signer les certifications** (il ne doit **pas** être utilisé pour des usages personnels sensibles).
+- Exportez la **clé privée** (MetaMask : Détails du compte → Exporter la clé privée). Vous en aurez besoin pour `PRIVATE_KEY` dans `.env`.
+
+### 2. Obtenir des MATIC de test (réseau testnet Mumbai)
+
+- Allez sur un **faucet** Polygon Mumbai, par exemple :  
+  [https://faucet.polygon.technology/](https://faucet.polygon.technology/) (choisir **Mumbai** ou le testnet proposé).
+- Entrez l’**adresse du portefeuille** (celle du compte dont vous avez exporté la clé).
+- Réclamez des **MATIC de test**. Sans MATIC, le déploiement du contrat et les certifications échoueront.
+
+### 3. Déployer le smart contract DOC PROOF
+
+Le contrat doit être déployé **une fois** sur le réseau que vous utilisez (testnet ou mainnet). Sans adresse de contrat valide dans `.env`, la vérification ne peut pas fonctionner.
+
+1. À la **racine du projet**, copiez le fichier d’exemple d’environnement :
+   ```bash
+   cp .env.example .env
+   ```
+2. Ouvrez le fichier **`.env`** et renseignez au minimum :
+   - **`PRIVATE_KEY`** : la clé privée du wallet (sans le préfixe `0x` ou avec, selon ce qu’accepte le script).
+3. Allez dans le dossier des contrats et installez les dépendances si ce n’est pas déjà fait :
+   ```bash
+   cd contracts
+   npm install --legacy-peer-deps
+   ```
+4. Dans le dossier **`contracts`**, créez un fichier **`.env`** (ou réutilisez celui à la racine en copiant les variables nécessaires) avec :
+   - **`PRIVATE_KEY`** : même clé privée que ci-dessus.
+   - **`POLYGON_MUMBAI_RPC_URL`** (pour le testnet Mumbai) : par exemple  
+     `https://rpc.ankr.com/polygon_mumbai`  
+     ou une URL RPC Mumbai fournie par votre fournisseur (Alchemy, Infura, etc.).
+5. Déployez le contrat sur le **testnet Mumbai** :
+   ```bash
+   npx hardhat run scripts/deploy.js --network mumbai
+   ```
+6. À la fin du script, une ligne du type **« DocProof Proxy deployed to: 0x... »** s’affiche. **Copiez cette adresse** : c’est l’adresse du contrat à mettre dans l’app.
+
+### 4. Remplir le `.env` à la racine du projet
+
+De retour **à la racine** du projet (dossier `doc_proof_v1`), éditez le fichier **`.env`** et remplacez les placeholders par les **vraies valeurs** :
+
+| Variable | Exemple / valeur à mettre |
+|----------|---------------------------|
+| **`NEXT_PUBLIC_DOC_PROOF_CONTRACT_ADDRESS`** | L’adresse du contrat déployé à l’étape 3 (ex. `0x1234...abcd`). |
+| **`NEXT_PUBLIC_CHAIN_ID`** | `80001` pour le testnet Mumbai. |
+| **`POLYGON_MUMBAI_RPC_URL`** | Une URL RPC Mumbai (ex. `https://rpc.ankr.com/polygon_mumbai`). |
+| **`PRIVATE_KEY`** | La clé privée du wallet (64 caractères hexadécimaux, avec ou sans `0x`). **Ne jamais commiter ce fichier.** |
+
+**Important** :  
+- Ne laissez **pas** `NEXT_PUBLIC_DOC_PROOF_CONTRACT_ADDRESS="0x..."` ni `PRIVATE_KEY="your-metamask-private-key"`.  
+- Sans adresse de contrat réelle, la vérification affichera toujours « Document introuvable ou révoqué » et « Émetteur : 0x0 ».  
+- Sans `PRIVATE_KEY` valide (64 caractères hex), les certifications ne seront pas enregistrées sur la blockchain et les documents resteront en PENDING.
+
+### 5. Redémarrer l’application et refaire un test
+
+1. Arrêtez le serveur de développement puis relancez :
+   ```bash
+   npm run dev
+   ```
+2. **Re-téléchargez un document** (ou utilisez un nouveau fichier). Avec un `.env` correct, le document doit passer en statut **CERTIFIED** et vous devez voir un hash de transaction blockchain.
+3. Allez sur **Vérifier**, collez le **hash du document** (format `0x...`) ou scannez le QR code.
+4. Vous devriez obtenir **« Document valide »** et un **Émetteur** qui est une adresse du type `0x1234...` (plus jamais `0x0` pour un document certifié sur la chaîne).
+
+### 6. Optionnel : IPFS (copie du document)
+
+Pour stocker une copie du document sur IPFS (lien de preuve, pas obligatoire pour la vérification par hash) :
+
+- Créez un compte sur **Pinata** (ou configurez Web3.Storage).
+- Dans `.env`, renseignez par exemple :
+  - `IPFS_PROVIDER="pinata"`
+  - `PINATA_API_KEY="votre clé"`
+  - `PINATA_API_SECRET="votre secret"`
+
+Sans ces variables, l’upload IPFS est ignoré mais la **certification blockchain** (hash) et la **vérification** peuvent fonctionner dès que le contrat et `PRIVATE_KEY` sont correctement configurés.
+
+----------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------
 
 ## Que peut faire un client avec cette plateforme ?
 
@@ -44,6 +146,8 @@ DOC PROOF est une plateforme de **certification blockchain de documents**. Elle 
 2. Coller le hash du document (format `0x...`) ou scanner le code QR
 3. Cliquer sur **Vérifier**
 4. Le résultat affiche : document valide ✓ ou invalide ✗, émetteur, date de certification, lien vers la transaction blockchain
+
+Si vous voyez **« Document introuvable ou révoqué »** et **« Émetteur : 0x0 »**, la plateforme n’est probablement pas encore configurée pour la blockchain. Consultez la section **« Configuration du .env pour certification et vérification réelles »** plus haut.
 
 ---
 
