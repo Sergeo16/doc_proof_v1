@@ -186,6 +186,53 @@ Returns:
 - **DID Integration**: Decentralized identity readiness
 - **DAO Governance**: Institutional multi-sig patterns
 
-## License
 
-MIT
+**Méthode 1 : Reset complet (Recommandée si vous voulez vraiment tout écraser)**
+```bash
+# 1. Récupérer toutes les informations du dépôt distant
+git fetch origin
+
+# 2. Réinitialiser votre branche locale pour qu'elle corresponde exactement à la branche distante
+git reset --hard origin/main
+
+# 3. Nettoyer tous les fichiers non suivis (optionnel, mais recommandé)
+git clean -fd
+```
+
+**Explication :**
+- `git fetch origin` : Télécharge les dernières informations du dépôt distant sans modifier vos fichiers locaux
+- `git reset --hard origin/main` : Réinitialise votre branche locale `main` pour qu'elle corresponde exactement à `origin/main`. **Toutes vos modifications locales non commitées seront perdues**
+- `git clean -fd` : Supprime tous les fichiers et dossiers non suivis par Git (fichiers créés localement mais jamais ajoutés à Git)
+
+**Méthode 2 : Checkout direct (Alternative simple)**
+```bash
+# 1. Récupérer les dernières informations
+git fetch origin
+
+# 2. Forcer le checkout de la branche distante
+git checkout -f origin/main
+
+# 3. Déplacer votre branche locale sur cette version
+git branch -f main origin/main
+
+# 4. Revenir sur votre branche locale
+git checkout main
+```
+
+**Explication :**
+- `git fetch origin` : Télécharge les informations du dépôt distant
+- `git checkout -f origin/main` : Force le checkout de la version distante (ignore les modifications locales)
+- `git branch -f main origin/main` : Force votre branche locale `main` à pointer vers `origin/main`
+- `git checkout main` : Revenir sur votre branche locale (maintenant identique à la distante)
+
+## 📄 Licence
+
+Propriétaire - Tous droits réservés
+
+## 👥 Support
+
+Pour toute question ou problème, contactez l'équipe de développement.
+
+---
+
+**Développé par Open Digital Land**
