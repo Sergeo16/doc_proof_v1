@@ -45,45 +45,71 @@ Sans cette configuration, les documents sont seulement enregistrés en base (sta
    - **Important** : ce compte sera utilisé **uniquement** pour déployer le contrat et signer les certifications DOC PROOF. Ne l’utilisez pas pour des usages personnels sensibles.
 
 3. **Exporter la clé privée** (pour la variable `PRIVATE_KEY` du `.env`)  
-   - Dans MetaMask : cliquez sur le **sélecteur de compte** (en haut).  
+   - Dans MetaMask : cliquez sur le **sélecteur de compte** (en haut — affiche « Compte 1 » ou votre adresse type `0x1234…`).  
+   - **Ne pas confondre** avec le sélecteur de **réseau** (Ethereum, Polygon, Linea, Base, etc.) : il faut bien ouvrir le menu du **compte**, pas la liste des réseaux.  
    - Cliquez sur les **trois points verticaux** à côté du compte, puis **« Détails du compte »** (ou « Account details »).  
    - Cliquez sur **« Exporter la clé privée »** (« Private key »), saisissez votre mot de passe MetaMask et validez.  
-   - Maintenez **« Maintenir pour révéler la clé privée »** (« Hold to reveal Private Key »), puis copiez la clé. Collez-la dans le `.env` pour `PRIVATE_KEY` (avec ou sans le préfixe `0x` selon la doc du projet).  
+   - **Interface actuelle** : vous arrivez sur l’écran « Account X / Clés privées » avec une liste de réseaux (Ethereum, Polygon, Linea, etc.). La clé est la même pour tous. Cliquez sur l’**icône copier** (deux carrés superposés) à droite d’un des réseaux (ex. **Polygon** pour DOC PROOF) pour copier la clé.  
+   - *(Ancienne interface :* maintenir « Maintenir pour révéler la clé privée » puis copier.*)  
+   - Collez la clé dans le `.env` pour `PRIVATE_KEY` (avec ou sans le préfixe `0x` selon la doc du projet).  
    - **Sécurité** : ne partagez jamais cette clé et ne la commitez pas dans le dépôt.  
    - Référence : [https://support.metamask.io/configure/accounts/how-to-export-an-accounts-private-key](https://support.metamask.io/configure/accounts/how-to-export-an-accounts-private-key)
 
-### 2. Obtenir des MATIC de test (réseau testnet Mumbai)
+### 2. Obtenir des MATIC/POL de test (réseau testnet)
 
-- Allez sur un **faucet** Polygon Mumbai, par exemple :  
-  [https://faucet.polygon.technology/](https://faucet.polygon.technology/) (choisir **Mumbai** ou le testnet proposé).
-- Entrez l’**adresse du portefeuille** (celle du compte dont vous avez exporté la clé).
-- Réclamez des **MATIC de test**. Sans MATIC, le déploiement du contrat et les certifications échoueront.
+Sans jetons de test (MATIC ou POL), le déploiement du contrat et les certifications échouent. **À faire dans cet ordre :**
+
+1. **Choisir le testnet**  
+   - **Mumbai** (chain ID 80001) : déprécié mais encore supporté par ce projet. Les faucets Mumbai sont de plus en plus rares.  
+   - **Amoy** (chain ID 80002) : testnet Polygon actuel, recommandé. Les faucets ci‑dessous fournissent des POL sur Amoy.
+
+2. **Récupérer l’adresse de votre portefeuille**  
+   - Dans MetaMask : cliquez sur le nom du compte (ou l’adresse) en haut pour copier l’adresse (format `0x...`). C’est cette adresse qu’il faut coller dans le faucet.
+
+3. **Aller sur un faucet et demander des jetons**  
+   - Page officielle listant les faucets : **[https://faucet.polygon.technology/](https://faucet.polygon.technology/)**  
+   - Faucets recommandés pour **Amoy** (recommandé) :  
+     - **Alchemy** (0,5 POL/jour avec compte) : [https://www.alchemy.com/faucets/polygon-amoy](https://www.alchemy.com/faucets/polygon-amoy)  
+     - **QuickNode** : [https://faucet.quicknode.com/polygon/amoy](https://faucet.quicknode.com/polygon/amoy)  
+     - **GetBlock** (inscription gratuite) : [https://getblock.io/faucet/matic-amoy/](https://getblock.io/faucet/matic-amoy/)  
+   - Sur le faucet : collez l’**adresse du portefeuille**, validez (et connectez un compte si demandé, ex. Alchemy). Les jetons arrivent en quelques secondes.
+
+4. **Vérifier la réception**  
+   - Dans MetaMask, ajoutez le réseau **Polygon Amoy** si besoin (Paramètres → Réseaux → Ajouter un réseau), puis vérifiez que le solde en POL (ou MATIC) a augmenté.  
+   - Explorer Amoy : [https://amoy.polygonscan.com/](https://amoy.polygonscan.com/)
+
+Si vous restez sur **Mumbai** : utilisez la même page [https://faucet.polygon.technology/](https://faucet.polygon.technology/) pour voir les options encore disponibles pour Mumbai.
 
 ### 3. Déployer le smart contract DOC PROOF
 
-Le contrat doit être déployé **une fois** sur le réseau que vous utilisez (testnet ou mainnet). Sans adresse de contrat valide dans `.env`, la vérification ne peut pas fonctionner.
+Le contrat doit être déployé **une fois** sur le réseau que vous utilisez. Sans adresse de contrat valide dans `.env`, la vérification ne peut pas fonctionner. **À faire dans cet ordre :**
 
-1. À la **racine du projet**, copiez le fichier d’exemple d’environnement :
+1. **À la racine du projet**, copiez le fichier d’exemple d’environnement (si ce n’est pas déjà fait) :
    ```bash
    cp .env.example .env
    ```
-2. Ouvrez le fichier **`.env`** et renseignez au minimum :
-   - **`PRIVATE_KEY`** : la clé privée du wallet (sans le préfixe `0x` ou avec, selon ce qu’accepte le script).
+2. Ouvrez le fichier **`.env`** à la racine et renseignez au minimum **`PRIVATE_KEY`** (la clé privée du wallet, avec ou sans `0x`).
 3. Allez dans le dossier des contrats et installez les dépendances si ce n’est pas déjà fait :
    ```bash
    cd contracts
    npm install --legacy-peer-deps
    ```
-4. Dans le dossier **`contracts`**, créez un fichier **`.env`** (ou réutilisez celui à la racine en copiant les variables nécessaires) avec :
-   - **`PRIVATE_KEY`** : même clé privée que ci-dessus.
-   - **`POLYGON_MUMBAI_RPC_URL`** (pour le testnet Mumbai) : par exemple  
-     `https://rpc.ankr.com/polygon_mumbai`  
-     ou une URL RPC Mumbai fournie par votre fournisseur (Alchemy, Infura, etc.).
-5. Déployez le contrat sur le **testnet Mumbai** :
-   ```bash
-   npx hardhat run scripts/deploy.js --network mumbai
-   ```
-6. À la fin du script, une ligne du type **« DocProof Proxy deployed to: 0x... »** s’affiche. **Copiez cette adresse** : c’est l’adresse du contrat à mettre dans l’app.
+4. Dans le dossier **`contracts`**, créez un fichier **`.env`** (ou copiez celui de la racine) avec :
+   - **`PRIVATE_KEY`** : même clé privée.
+   - **Pour Mumbai** : `POLYGON_MUMBAI_RPC_URL="https://rpc.ankr.com/polygon_mumbai"`  
+   - **Pour Amoy (recommandé)** : `POLYGON_AMOY_RPC_URL="https://rpc-amoy.polygon.technology"`
+5. Déployez le contrat :  
+   - **Sur Mumbai** (testnet déprécié) :
+     ```bash
+     npx hardhat run scripts/deploy.js --network mumbai
+     ```
+   - **Sur Amoy** (recommandé) :
+     ```bash
+     npx hardhat run scripts/deploy.js --network amoy
+     ```
+6. À la fin du script, une ligne du type **« DocProof Proxy deployed to: 0x... »** s’affiche. **Copiez cette adresse** : c’est l’adresse du contrat à mettre dans l’app (étape 4).
+
+Référence Hardhat : [https://hardhat.org/docs](https://hardhat.org/docs)
 
 ### 4. Remplir le `.env` à la racine du projet
 
@@ -92,34 +118,50 @@ De retour **à la racine** du projet (dossier `doc_proof_v1`), éditez le fichie
 | Variable | Exemple / valeur à mettre |
 |----------|---------------------------|
 | **`NEXT_PUBLIC_DOC_PROOF_CONTRACT_ADDRESS`** | L’adresse du contrat déployé à l’étape 3 (ex. `0x1234...abcd`). |
-| **`NEXT_PUBLIC_CHAIN_ID`** | `80001` pour le testnet Mumbai. |
-| **`POLYGON_MUMBAI_RPC_URL`** | Une URL RPC Mumbai (ex. `https://rpc.ankr.com/polygon_mumbai`). |
-| **`PRIVATE_KEY`** | La clé privée du wallet (64 caractères hexadécimaux, avec ou sans `0x`). **Ne jamais commiter ce fichier.** |
+| **`NEXT_PUBLIC_CHAIN_ID`** | `80001` pour Mumbai, ou `80002` pour Amoy. |
+| **`POLYGON_MUMBAI_RPC_URL`** | Si Mumbai : `https://rpc.ankr.com/polygon_mumbai`. |
+| **`POLYGON_AMOY_RPC_URL`** | Si Amoy : `https://rpc-amoy.polygon.technology`. |
+| **`PRIVATE_KEY`** | La clé privée du wallet (avec ou sans `0x`). **Ne jamais commiter ce fichier.** |
 
 **Important** :  
 - Ne laissez **pas** `NEXT_PUBLIC_DOC_PROOF_CONTRACT_ADDRESS="0x..."` ni `PRIVATE_KEY="your-metamask-private-key"`.  
 - Sans adresse de contrat réelle, la vérification affichera toujours « Document introuvable ou révoqué » et « Émetteur : 0x0 ».  
-- Sans `PRIVATE_KEY` valide (64 caractères hex), les certifications ne seront pas enregistrées sur la blockchain et les documents resteront en PENDING.
+- Sans `PRIVATE_KEY` valide, les certifications ne seront pas enregistrées et les documents resteront en PENDING.  
+- Si vous déployez sur **Amoy** : mettez `NEXT_PUBLIC_CHAIN_ID="80002"` et `POLYGON_AMOY_RPC_URL="https://rpc-amoy.polygon.technology"` dans le `.env` à la racine (l’app utilise automatiquement l’RPC Amoy pour le chain ID 80002).
 
 ### 5. Redémarrer l’application et refaire un test
 
-1. Arrêtez le serveur de développement puis relancez :
+**À faire dans cet ordre :**
+
+1. À la **racine** du projet, arrêtez le serveur de développement (Ctrl+C) puis relancez :
    ```bash
    npm run dev
    ```
-2. **Re-téléchargez un document** (ou utilisez un nouveau fichier). Avec un `.env` correct, le document doit passer en statut **CERTIFIED** et vous devez voir un hash de transaction blockchain.
+2. **Re-téléchargez un document** (ou uploadez un nouveau fichier). Avec un `.env` correct, le document doit passer en statut **CERTIFIED** et vous devez voir un hash de transaction blockchain.
 3. Allez sur **Vérifier**, collez le **hash du document** (format `0x...`) ou scannez le QR code.
 4. Vous devriez obtenir **« Document valide »** et un **Émetteur** qui est une adresse du type `0x1234...` (plus jamais `0x0` pour un document certifié sur la chaîne).
 
 ### 6. Optionnel : IPFS (copie du document)
 
-Pour stocker une copie du document sur IPFS (lien de preuve, pas obligatoire pour la vérification par hash) :
+Pour stocker une copie du document sur IPFS (lien de preuve, pas obligatoire pour la vérification par hash). **À faire dans cet ordre :**
 
-- Créez un compte sur **Pinata** (ou configurez Web3.Storage).
-- Dans `.env`, renseignez par exemple :
-  - `IPFS_PROVIDER="pinata"`
-  - `PINATA_API_KEY="votre clé"`
-  - `PINATA_API_SECRET="votre secret"`
+**Option A — Pinata**
+
+1. Créez un compte : **[https://app.pinata.cloud/](https://app.pinata.cloud/)** (ou [https://app.pinata.cloud/register](https://app.pinata.cloud/register) pour l’inscription).
+2. Une fois connecté : **API Keys** dans le menu → **New Key** → créez une clé (Admin ou avec les permissions nécessaires).
+3. Copiez **API Key** et **API Secret** (ou **JWT**) dès l’affichage (ils ne seront plus visibles ensuite). Doc : [https://docs.pinata.cloud/account-management/api-keys](https://docs.pinata.cloud/account-management/api-keys)
+4. Dans le **`.env`** à la racine :
+   - `IPFS_PROVIDER="pinata"`
+   - `PINATA_API_KEY="votre clé"`
+   - `PINATA_API_SECRET="votre secret"`
+
+**Option B — Web3.Storage**
+
+1. Créez un compte : **[https://web3.storage/](https://web3.storage/)** (connexion par e‑mail ou GitHub).
+2. Générez un **token API** depuis le tableau de bord. Doc : [https://web3.storage/docs/how-tos/generate-api-token/](https://web3.storage/docs/how-tos/generate-api-token/)
+3. Dans le **`.env`** à la racine :
+   - `IPFS_PROVIDER="web3storage"`
+   - `WEB3_STORAGE_TOKEN="votre token"`
 
 Sans ces variables, l’upload IPFS est ignoré mais la **certification blockchain** (hash) et la **vérification** peuvent fonctionner dès que le contrat et `PRIVATE_KEY` sont correctement configurés.
 

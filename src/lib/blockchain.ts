@@ -18,10 +18,13 @@ const DOC_PROOF_ABI = [
 ];
 
 export function getProvider() {
+  const chainId = process.env.NEXT_PUBLIC_CHAIN_ID;
   const rpcUrl =
-    process.env.NEXT_PUBLIC_CHAIN_ID === "137"
+    chainId === "137"
       ? process.env.POLYGON_MAINNET_RPC_URL || "https://polygon-rpc.com"
-      : process.env.POLYGON_MUMBAI_RPC_URL || "https://rpc-mumbai.maticvigil.com";
+      : chainId === "80002"
+        ? process.env.POLYGON_AMOY_RPC_URL || "https://rpc-amoy.polygon.technology"
+        : process.env.POLYGON_MUMBAI_RPC_URL || "https://rpc.ankr.com/polygon_mumbai";
 
   return new ethers.JsonRpcProvider(rpcUrl);
 }
@@ -85,9 +88,12 @@ export async function verifyOnChain(documentHash: string): Promise<{
 }
 
 export function getExplorerUrl(txHash: string): string {
+  const chainId = process.env.NEXT_PUBLIC_CHAIN_ID;
   const base =
-    process.env.NEXT_PUBLIC_CHAIN_ID === "137"
+    chainId === "137"
       ? "https://polygonscan.com"
-      : "https://mumbai.polygonscan.com";
+      : chainId === "80002"
+        ? "https://amoy.polygonscan.com"
+        : "https://mumbai.polygonscan.com";
   return `${base}/tx/${txHash}`;
 }
