@@ -41,9 +41,21 @@
     "blockchain": "View on blockchain"
   },
   "dashboard": {
+    "title": "Dashboard",
     "myDocuments": "My Documents",
     "recentVerifications": "Recent Verifications",
-    "analytics": "Analytics"
+    "analytics": "Analytics",
+    "uploadCardDesc": "Certify a new document on the blockchain",
+    "verifyCardDesc": "Verify document integrity by hash",
+    "adminCardTitle": "Admin Panel",
+    "adminCardDesc": "Super Admin control center",
+    "noDocumentsYet": "No documents yet. Upload your first!",
+    "noVerificationsYet": "No verifications yet",
+    "file": "File",
+    "status": "Status",
+    "hash": "Hash",
+    "valid": "Valid",
+    "invalid": "Invalid"
   },
   "admin": {
     "maintenance": "Maintenance Mode",
@@ -54,7 +66,14 @@
     "fraudReports": "AI Fraud Reports",
     "themeDefaults": "Theme Defaults",
     "languages": "Languages",
-    "suspendUser": "Suspend User"
+    "suspendUser": "Suspend User",
+    "documents": "Documents",
+    "dashboardTitle": "Super Admin Dashboard",
+    "recentAuditLogs": "Recent Audit Logs",
+    "action": "Action",
+    "resource": "Resource",
+    "user": "User",
+    "time": "Time"
   },
   "theme": {
     "selectTheme": "Appearance",
@@ -77,5 +96,18 @@
     "download": "Download",
     "copy": "Copy",
     "qrCode": "QR Code"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "nameOptional": "Name (optional)",
+    "passwordHint": "Password (min 8 chars, 1 uppercase)",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "••••••••",
+    "namePlaceholder": "John Doe",
+    "loginFailed": "Login failed",
+    "registrationFailed": "Registration failed",
+    "noAccount": "No account?",
+    "alreadyHaveAccount": "Already have an account?"
   }
 }

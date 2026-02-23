@@ -41,7 +41,7 @@ export default function VerifyPage() {
       const data = await verifyDocumentByHash(hash.trim());
       setResult(data);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Verification failed");
+      toast.error(err instanceof Error ? err.message : t("invalid"));
     } finally {
       setLoading(false);
     }
@@ -63,7 +63,7 @@ export default function VerifyPage() {
             value={hash}
             onChange={(e) => setHash(e.target.value)}
             placeholder={t("hashPlaceholder")}
-            className="input input-bordered w-full font-mono"
+            className="input input-bordered w-full font-mono px-4 py-3"
           />
           <button
             type="submit"

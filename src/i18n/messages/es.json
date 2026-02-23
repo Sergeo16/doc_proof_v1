@@ -41,9 +41,21 @@
     "blockchain": "Ver en blockchain"
   },
   "dashboard": {
+    "title": "Panel",
     "myDocuments": "Mis documentos",
     "recentVerifications": "Verificaciones recientes",
-    "analytics": "Analíticas"
+    "analytics": "Analíticas",
+    "uploadCardDesc": "Certificar un nuevo documento en la blockchain",
+    "verifyCardDesc": "Verificar la integridad del documento por hash",
+    "adminCardTitle": "Panel de administración",
+    "adminCardDesc": "Centro de control Super Admin",
+    "noDocumentsYet": "Aún no hay documentos. ¡Sube el primero!",
+    "noVerificationsYet": "Aún no hay verificaciones",
+    "file": "Archivo",
+    "status": "Estado",
+    "hash": "Hash",
+    "valid": "Válido",
+    "invalid": "Inválido"
   },
   "admin": {
     "maintenance": "Modo mantenimiento",
@@ -54,7 +66,14 @@
     "fraudReports": "Informes de fraude IA",
     "themeDefaults": "Temas por defecto",
     "languages": "Idiomas",
-    "suspendUser": "Suspender usuario"
+    "suspendUser": "Suspender usuario",
+    "documents": "Documentos",
+    "dashboardTitle": "Panel Super Admin",
+    "recentAuditLogs": "Registros de auditoría recientes",
+    "action": "Acción",
+    "resource": "Recurso",
+    "user": "Usuario",
+    "time": "Hora"
   },
   "theme": {
     "selectTheme": "Apariencia",
@@ -77,5 +96,18 @@
     "download": "Descargar",
     "copy": "Copiar",
     "qrCode": "Código QR"
+  },
+  "auth": {
+    "email": "Correo",
+    "password": "Contraseña",
+    "nameOptional": "Nombre (opcional)",
+    "passwordHint": "Contraseña (mín. 8 caracteres, 1 mayúscula)",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "passwordPlaceholder": "••••••••",
+    "namePlaceholder": "Juan Pérez",
+    "loginFailed": "Error al iniciar sesión",
+    "registrationFailed": "Error al registrarse",
+    "noAccount": "¿No tienes cuenta?",
+    "alreadyHaveAccount": "¿Ya tienes cuenta?"
   }
 }

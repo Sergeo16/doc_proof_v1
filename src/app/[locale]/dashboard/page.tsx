@@ -10,6 +10,8 @@ export default async function DashboardPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const t = await getTranslations("dashboard");
+  const tApp = await getTranslations("app");
   const session = await getSession();
   if (!session) redirect(`/${locale}/login`);
 
@@ -29,26 +31,26 @@ export default async function DashboardPage({
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold gradient-text mb-8">Dashboard</h1>
+      <h1 className="text-4xl font-bold gradient-text mb-8">{t("title")}</h1>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Link href="/upload" className="card glass-card hover:border-primary/50 transition-colors">
           <div className="card-body">
-            <h2 className="card-title">Upload Document</h2>
-            <p className="opacity-80">Certify a new document on the blockchain</p>
+            <h2 className="card-title">{tApp("certifyDocument")}</h2>
+            <p className="opacity-80">{t("uploadCardDesc")}</p>
           </div>
         </Link>
         <Link href="/verify" className="card glass-card hover:border-primary/50 transition-colors">
           <div className="card-body">
-            <h2 className="card-title">Verify Document</h2>
-            <p className="opacity-80">Verify document integrity by hash</p>
+            <h2 className="card-title">{tApp("verifyDocument")}</h2>
+            <p className="opacity-80">{t("verifyCardDesc")}</p>
           </div>
         </Link>
         {session.role === "SUPER_ADMIN" && (
           <Link href="/admin" className="card glass-card hover:border-primary/50 transition-colors">
             <div className="card-body">
-              <h2 className="card-title">Admin Panel</h2>
-              <p className="opacity-80">Super Admin control center</p>
+              <h2 className="card-title">{t("adminCardTitle")}</h2>
+              <p className="opacity-80">{t("adminCardDesc")}</p>
             </div>
           </Link>
         )}
@@ -57,17 +59,17 @@ export default async function DashboardPage({
       <div className="mt-12 grid gap-8 lg:grid-cols-2">
         <div className="card glass-card">
           <div className="card-body">
-            <h2 className="card-title">My Documents</h2>
+            <h2 className="card-title">{t("myDocuments")}</h2>
             {documents.length === 0 ? (
-              <p className="opacity-70">No documents yet. Upload your first!</p>
+              <p className="opacity-70">{t("noDocumentsYet")}</p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="table">
                   <thead>
                     <tr>
-                      <th>File</th>
-                      <th>Status</th>
-                      <th>Hash</th>
+                      <th>{t("file")}</th>
+                      <th>{t("status")}</th>
+                      <th>{t("hash")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -101,9 +103,9 @@ export default async function DashboardPage({
 
         <div className="card glass-card">
           <div className="card-body">
-            <h2 className="card-title">Recent Verifications</h2>
+            <h2 className="card-title">{t("recentVerifications")}</h2>
             {verifications.length === 0 ? (
-              <p className="opacity-70">No verifications yet</p>
+              <p className="opacity-70">{t("noVerificationsYet")}</p>
             ) : (
               <ul className="space-y-2">
                 {verifications.map((v) => (
@@ -116,7 +118,7 @@ export default async function DashboardPage({
                         v.isValid ? "badge-success" : "badge-error"
                       }`}
                     >
-                      {v.isValid ? "Valid" : "Invalid"}
+                      {v.isValid ? t("valid") : t("invalid")}
                     </span>
                   </li>
                 ))}

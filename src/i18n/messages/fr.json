@@ -10,7 +10,7 @@
   },
   "nav": {
     "home": "Accueil",
-    "upload": "Télécharger un document",
+    "upload": "Téléverser un document",
     "verify": "Vérifier",
     "dashboard": "Tableau de bord",
     "admin": "Administration",
@@ -20,7 +20,7 @@
     "register": "Inscription"
   },
   "upload": {
-    "title": "Télécharger un document",
+    "title": "Téléverser un document",
     "dropzone": "Déposez votre document ici ou cliquez pour parcourir",
     "processing": "Traitement du document...",
     "generatingHash": "Génération du hash...",
@@ -41,9 +41,21 @@
     "blockchain": "Voir sur la blockchain"
   },
   "dashboard": {
+    "title": "Tableau de bord",
     "myDocuments": "Mes documents",
     "recentVerifications": "Vérifications récentes",
-    "analytics": "Analytiques"
+    "analytics": "Analytiques",
+    "uploadCardDesc": "Certifier un nouveau document sur la blockchain",
+    "verifyCardDesc": "Vérifier l'intégrité d'un document par son hash",
+    "adminCardTitle": "Panneau d'administration",
+    "adminCardDesc": "Centre de contrôle Super Admin",
+    "noDocumentsYet": "Aucun document pour l'instant. Téléversez le premier !",
+    "noVerificationsYet": "Aucune vérification pour l'instant",
+    "file": "Fichier",
+    "status": "Statut",
+    "hash": "Hash",
+    "valid": "Valide",
+    "invalid": "Invalide"
   },
   "admin": {
     "maintenance": "Mode maintenance",
@@ -54,7 +66,14 @@
     "fraudReports": "Rapports de fraude IA",
     "themeDefaults": "Thèmes par défaut",
     "languages": "Langues",
-    "suspendUser": "Suspendre l'utilisateur"
+    "suspendUser": "Suspendre l'utilisateur",
+    "documents": "Documents",
+    "dashboardTitle": "Tableau de bord Super Admin",
+    "recentAuditLogs": "Journaux d'audit récents",
+    "action": "Action",
+    "resource": "Ressource",
+    "user": "Utilisateur",
+    "time": "Heure"
   },
   "theme": {
     "selectTheme": "Apparence",
@@ -77,5 +96,18 @@
     "download": "Télécharger",
     "copy": "Copier",
     "qrCode": "Code QR"
+  },
+  "auth": {
+    "email": "Courriel",
+    "password": "Mot de passe",
+    "nameOptional": "Nom (optionnel)",
+    "passwordHint": "Mot de passe (min. 8 caractères, 1 majuscule)",
+    "emailPlaceholder": "vous@exemple.com",
+    "passwordPlaceholder": "••••••••",
+    "namePlaceholder": "Jean Dupont",
+    "loginFailed": "Échec de la connexion",
+    "registrationFailed": "Échec de l'inscription",
+    "noAccount": "Pas de compte ?",
+    "alreadyHaveAccount": "Déjà un compte ?"
   }
 }

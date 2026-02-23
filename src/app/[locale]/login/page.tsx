@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const t = useTranslations("nav");
+  const tAuth = useTranslations("auth");
   const locale = useLocale();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ export default function LoginPage() {
       formData.set("locale", locale);
       await login(formData);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Login failed");
+      toast.error(err instanceof Error ? err.message : tAuth("loginFailed"));
       setLoading(false);
     }
   }
@@ -41,28 +42,28 @@ export default function LoginPage() {
             <input type="hidden" name="locale" value={locale} />
             <div className="form-control w-full">
               <label className="label py-1" htmlFor="login-email">
-                <span className="label-text font-medium">Email</span>
+                <span className="label-text font-medium">{tAuth("email")}</span>
               </label>
               <input
                 id="login-email"
                 name="email"
                 type="email"
                 required
-                placeholder="vous@exemple.com"
-                className="input input-bordered w-full h-12"
+                placeholder={tAuth("emailPlaceholder")}
+                className="input input-bordered w-full h-12 px-4 py-3"
               />
             </div>
             <div className="form-control w-full">
               <label className="label py-1" htmlFor="login-password">
-                <span className="label-text font-medium">Password</span>
+                <span className="label-text font-medium">{tAuth("password")}</span>
               </label>
               <input
                 id="login-password"
                 name="password"
                 type="password"
                 required
-                placeholder="••••••••"
-                className="input input-bordered w-full h-12"
+                placeholder={tAuth("passwordPlaceholder")}
+                className="input input-bordered w-full h-12 px-4 py-3"
               />
             </div>
             <button
@@ -74,7 +75,7 @@ export default function LoginPage() {
             </button>
           </form>
           <p className="text-center text-sm opacity-70 mt-4">
-            No account?{" "}
+            {tAuth("noAccount")}{" "}
             <Link href="/register" className="link link-primary">
               {t("register")}
             </Link>

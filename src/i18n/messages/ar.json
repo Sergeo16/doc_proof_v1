@@ -41,9 +41,21 @@
     "blockchain": "عرض على البلوكشين"
   },
   "dashboard": {
+    "title": "لوحة التحكم",
     "myDocuments": "مستنداتي",
     "recentVerifications": "عمليات التحقق الأخيرة",
-    "analytics": "التحليلات"
+    "analytics": "التحليلات",
+    "uploadCardDesc": "توثيق مستند جديد على البلوكشين",
+    "verifyCardDesc": "التحقق من سلامة المستند بواسطة التجزئة",
+    "adminCardTitle": "لوحة الإدارة",
+    "adminCardDesc": "مركز تحكم المشرف الرئيسي",
+    "noDocumentsYet": "لا مستندات بعد. ارفع أول مستند!",
+    "noVerificationsYet": "لا تحققات بعد",
+    "file": "الملف",
+    "status": "الحالة",
+    "hash": "التجزئة",
+    "valid": "صالح",
+    "invalid": "غير صالح"
   },
   "admin": {
     "maintenance": "وضع الصيانة",
@@ -54,7 +66,14 @@
     "fraudReports": "تقارير الاحتيال بالذكاء الاصطناعي",
     "themeDefaults": "المظهر الافتراضي",
     "languages": "اللغات",
-    "suspendUser": "تعليق المستخدم"
+    "suspendUser": "تعليق المستخدم",
+    "documents": "المستندات",
+    "dashboardTitle": "لوحة المشرف الرئيسية",
+    "recentAuditLogs": "سجلات التدقيق الأخيرة",
+    "action": "الإجراء",
+    "resource": "المورد",
+    "user": "المستخدم",
+    "time": "الوقت"
   },
   "theme": {
     "selectTheme": "المظهر",
@@ -77,5 +96,18 @@
     "download": "تحميل",
     "copy": "نسخ",
     "qrCode": "رمز QR"
+  },
+  "auth": {
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "nameOptional": "الاسم (اختياري)",
+    "passwordHint": "كلمة المرور (8 أحرف على الأقل، حرف كبير واحد)",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "••••••••",
+    "namePlaceholder": "أحمد",
+    "loginFailed": "فشل تسجيل الدخول",
+    "registrationFailed": "فشل التسجيل",
+    "noAccount": "لا تملك حساباً؟",
+    "alreadyHaveAccount": "لديك حساب بالفعل؟"
   }
 }

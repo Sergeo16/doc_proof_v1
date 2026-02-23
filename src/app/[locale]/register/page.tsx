@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 
 export default function RegisterPage() {
   const t = useTranslations("nav");
+  const tAuth = useTranslations("auth");
   const locale = useLocale();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ export default function RegisterPage() {
       formData.set("locale", locale);
       await register(formData);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Registration failed");
+      toast.error(err instanceof Error ? err.message : tAuth("registrationFailed"));
       setLoading(false);
     }
   }
@@ -41,32 +42,32 @@ export default function RegisterPage() {
             <input type="hidden" name="locale" value={locale} />
             <div className="form-control w-full">
               <label className="label py-1" htmlFor="reg-email">
-                <span className="label-text font-medium">Email</span>
+                <span className="label-text font-medium">{tAuth("email")}</span>
               </label>
               <input
                 id="reg-email"
                 name="email"
                 type="email"
                 required
-                placeholder="vous@exemple.com"
-                className="input input-bordered w-full h-12"
+                placeholder={tAuth("emailPlaceholder")}
+                className="input input-bordered w-full h-12 px-4 py-3"
               />
             </div>
             <div className="form-control w-full">
               <label className="label py-1" htmlFor="reg-name">
-                <span className="label-text font-medium">Name (optional)</span>
+                <span className="label-text font-medium">{tAuth("nameOptional")}</span>
               </label>
               <input
                 id="reg-name"
                 name="name"
                 type="text"
-                placeholder="Jean Dupont"
-                className="input input-bordered w-full h-12"
+                placeholder={tAuth("namePlaceholder")}
+                className="input input-bordered w-full h-12 px-4 py-3"
               />
             </div>
             <div className="form-control w-full">
               <label className="label py-1" htmlFor="reg-password">
-                <span className="label-text font-medium">Password (min 8 chars, 1 uppercase)</span>
+                <span className="label-text font-medium">{tAuth("passwordHint")}</span>
               </label>
               <input
                 id="reg-password"
@@ -74,8 +75,8 @@ export default function RegisterPage() {
                 type="password"
                 required
                 minLength={8}
-                placeholder="••••••••"
-                className="input input-bordered w-full h-12"
+                placeholder={tAuth("passwordPlaceholder")}
+                className="input input-bordered w-full h-12 px-4 py-3"
               />
             </div>
             <button
@@ -91,7 +92,7 @@ export default function RegisterPage() {
             </button>
           </form>
           <p className="text-center text-sm opacity-70 mt-4">
-            Already have an account?{" "}
+            {tAuth("alreadyHaveAccount")}{" "}
             <Link href="/login" className="link link-primary">
               {t("login")}
             </Link>

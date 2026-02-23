@@ -21,30 +21,30 @@ export function AdminDashboard({ stats, recentLogs }: AdminDashboardProps) {
     <div className="space-y-8">
       <div className="grid gap-4 md:grid-cols-3">
         <div className="stat bg-base-200 rounded-box">
-          <div className="stat-title">Users</div>
+          <div className="stat-title">{t("users")}</div>
           <div className="stat-value text-primary">{stats.users}</div>
         </div>
         <div className="stat bg-base-200 rounded-box">
-          <div className="stat-title">Documents</div>
+          <div className="stat-title">{t("documents")}</div>
           <div className="stat-value text-secondary">{stats.documents}</div>
         </div>
         <div className="stat bg-base-200 rounded-box">
-          <div className="stat-title">Organizations</div>
+          <div className="stat-title">{t("organizations")}</div>
           <div className="stat-value">{stats.organizations}</div>
         </div>
       </div>
 
       <div className="card glass-card">
         <div className="card-body">
-          <h2 className="card-title">Recent Audit Logs</h2>
+          <h2 className="card-title">{t("recentAuditLogs")}</h2>
           <div className="overflow-x-auto">
             <table className="table">
               <thead>
                 <tr>
-                  <th>Action</th>
-                  <th>Resource</th>
-                  <th>User</th>
-                  <th>Time</th>
+                  <th>{t("action")}</th>
+                  <th>{t("resource")}</th>
+                  <th>{t("user")}</th>
+                  <th>{t("time")}</th>
                 </tr>
               </thead>
               <tbody>

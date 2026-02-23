@@ -216,9 +216,9 @@ Sans ces variables, l’upload IPFS est ignoré mais la **certification blockcha
 
 **Comment faire** :
 1. Se connecter ou créer un compte
-2. Aller sur **Télécharger un document** (ou `/en/upload`)
+2. Aller sur **Téléverser un document** (ou `/en/upload`)
 3. Glisser-déposer le fichier (PDF recommandé) ou cliquer pour le sélectionner
-4. Cliquer sur **Télécharger un document**
+4. Cliquer sur **Téléverser un document**
 5. Attendre la génération du hash, l’upload IPFS et l’enregistrement sur la blockchain
 6. Récupérer le **hash du document** et le **code QR** pour la vérification
 

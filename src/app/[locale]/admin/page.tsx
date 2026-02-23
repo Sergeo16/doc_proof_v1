@@ -10,6 +10,7 @@ export default async function AdminPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const t = await getTranslations("admin");
   const session = await getSession();
   if (!session || session.role !== "SUPER_ADMIN") redirect(`/${locale}`);
 
@@ -27,7 +28,7 @@ export default async function AdminPage({
   return (
     <div className="container mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold gradient-text mb-8">
-        Super Admin Dashboard
+        {t("dashboardTitle")}
       </h1>
 
       <AdminDashboard
