@@ -150,9 +150,35 @@ De retour **à la racine** du projet (dossier `doc_proof_v1`), éditez le fichie
 
 ### 6. Optionnel : IPFS (copie du document)
 
-Pour stocker une copie du document sur IPFS (lien de preuve, pas obligatoire pour la vérification par hash). **À faire dans cet ordre :**
+#### Qu’est-ce qu’IPFS ?
 
-**Option A — Pinata**
+**IPFS** (InterPlanetary File System) est un système de stockage **décentralisé** : les fichiers sont identifiés par leur **contenu** (un hash appelé CID), et non par une URL classique. Dans DOC PROOF, la **vérification** repose sur le **hash enregistré sur la blockchain** ; IPFS sert à stocker une **copie** du document pour pouvoir la consulter ou la partager via un lien (ex. `https://ipfs.io/ipfs/Qm...`). C’est **optionnel** : sans IPFS, la certification et la vérification par hash fonctionnent déjà.
+
+#### Comparaison : Pinata vs Web3.Storage
+
+| Critère | **Pinata** | **Web3.Storage** |
+|--------|------------|------------------|
+| **Type** | Service de « pinning » IPFS (héberge vos fichiers sur le réseau IPFS). | Service Protocol Labs (IPFS + Filecoin) ; stockage gratuit pour les développeurs. |
+| **Authentification** | API Key + API Secret (deux valeurs dans le `.env`). | Un seul token API (Bearer). |
+| **Configuration** | Dashboard clair, création de clé en quelques clics. | Compte puis génération d’un token dans le tableau de bord. |
+| **Offre gratuite** | Quota gratuit adapté au développement et petits projets. | Plan gratuit avec plafond ; des informations de paiement peuvent être demandées à l’inscription. |
+| **Usage dans DOC PROOF** | C’est le **fournisseur par défaut** de l’application (`IPFS_PROVIDER` non défini = Pinata). | Nécessite de définir `IPFS_PROVIDER="web3storage"` et `WEB3_STORAGE_TOKEN`. |
+| **Documentation** | Très fournie, orientée intégration. | Doc officielle Protocol Labs. |
+
+#### Recommandation
+
+**Pinata** est le plus recommandé pour DOC PROOF :  
+- C’est le **défaut** du projet (aucune variable à mettre si vous choisissez Pinata après avoir ajouté les clés).  
+- **Configuration simple** : deux variables (`PINATA_API_KEY`, `PINATA_API_SECRET`), dashboard lisible.  
+- Très utilisé dans l’écosystème Web3 (NFT, dApps), bonne disponibilité et support.  
+
+Choisir **Web3.Storage** si vous préférez un service sous l’écosystème Protocol Labs ou si vous utilisez déjà un token Web3.Storage.
+
+---
+
+**À faire dans cet ordre :**
+
+**Option A — Pinata (recommandé)**
 
 1. Créez un compte : **[https://app.pinata.cloud/](https://app.pinata.cloud/)** (ou [https://app.pinata.cloud/register](https://app.pinata.cloud/register) pour l’inscription).
 2. Une fois connecté : **API Keys** dans le menu → **New Key** → créez une clé (Admin ou avec les permissions nécessaires).
