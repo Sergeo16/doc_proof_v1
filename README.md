@@ -4,7 +4,7 @@
 
 [![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
 [![Solidity](https://img.shields.io/badge/Solidity-0.8.24-blue)](https://soliditylang.org/)
-[![Polygon](https://img.shields.io/badge/Polygon-Mumbai%20%7C%20Mainnet-purple)](https://polygon.technology/)
+[![Polygon](https://img.shields.io/badge/Polygon-Amoy%20%7C%20Mumbai%20%7C%20Mainnet-purple)](https://polygon.technology/)
 
 ## Features
 
@@ -153,10 +153,11 @@ doc_proof_v1/
 - Prevents duplicate hash registration
 - Events for certification/revocation
 
-Deploy:
+Deploy (testnet Amoy recommandé ; voir [GUIDE_UTILISATEUR.md](GUIDE_UTILISATEUR.md) pour obtenir des POL de test, par ex. via [StakePool Amoy Faucet](https://faucet.stakepool.dev.br/)) :
 ```bash
 cd contracts
-npx hardhat run scripts/deploy.js --network mumbai
+npx hardhat run scripts/deploy.js --network amoy   # recommandé
+# ou --network mumbai (testnet déprécié)
 ```
 
 ## API

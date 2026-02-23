@@ -67,12 +67,16 @@ Sans jetons de test (MATIC ou POL), le déploiement du contrat et les certificat
    - Dans MetaMask : cliquez sur le nom du compte (ou l’adresse) en haut pour copier l’adresse (format `0x...`). C’est cette adresse qu’il faut coller dans le faucet.
 
 3. **Aller sur un faucet et demander des jetons**  
-   - Page officielle listant les faucets : **[https://faucet.polygon.technology/](https://faucet.polygon.technology/)**  
-   - Faucets recommandés pour **Amoy** (recommandé) :  
-     - **Alchemy** (0,5 POL/jour avec compte) : [https://www.alchemy.com/faucets/polygon-amoy](https://www.alchemy.com/faucets/polygon-amoy)  
-     - **QuickNode** : [https://faucet.quicknode.com/polygon/amoy](https://faucet.quicknode.com/polygon/amoy)  
-     - **GetBlock** (inscription gratuite) : [https://getblock.io/faucet/matic-amoy/](https://getblock.io/faucet/matic-amoy/)  
-   - Sur le faucet : collez l’**adresse du portefeuille**, validez (et connectez un compte si demandé, ex. Alchemy). Les jetons arrivent en quelques secondes.
+   - **Recommandé — StakePool Amoy Faucet** (POL gratuit **sans solde mainnet**) :  
+     - **[https://faucet.stakepool.dev.br/](https://faucet.stakepool.dev.br/)** — choisir **Polygon Amoy**, coller votre adresse, cocher le CAPTCHA (« Je suis un humain »), puis valider.  
+     - Limite : **1 demande toutes les 24 h** ; votre solde doit être **inférieur à 1 POL** pour être éligible. Aucun ETH ni MATIC sur mainnet requis.  
+   - Page officielle listant d’autres faucets : [https://faucet.polygon.technology/](https://faucet.polygon.technology/)  
+   - **Autres faucets Amoy** (souvent avec prérequis de solde mainnet) :  
+     - **Alchemy** (0,1–0,5 POL/jour) : [https://www.alchemy.com/faucets/polygon-amoy](https://www.alchemy.com/faucets/polygon-amoy) — exige **au moins 0,001 ETH sur Ethereum Mainnet**.  
+     - **QuickNode** : [https://faucet.quicknode.com/polygon/amoy](https://faucet.quicknode.com/polygon/amoy) — exige **un solde ETH valide sur Ethereum Mainnet**.  
+     - **GetBlock** (inscription gratuite) : [https://getblock.io/faucet/matic-amoy/](https://getblock.io/faucet/matic-amoy/) — exige **au moins 5 MATIC sur Polygon Mainnet**.  
+     - **Chainlink** (0,5 POL ou 25 LINK testnet) : [https://faucets.chain.link/polygon-amoy](https://faucets.chain.link/polygon-amoy) — pour recevoir les **0,5 POL** (jeton natif pour le gas), il faut détenir **au moins 1 LINK sur Ethereum Mainnet** ; sans cela, seule la demande « 25 LINK » (testnet) peut réussir, et le LINK ne paie pas le gas sur Amoy.  
+   - Sur le faucet : collez l’**adresse du portefeuille**, validez (et connectez un compte si demandé). Les jetons arrivent en quelques secondes.
 
 4. **Vérifier la réception**  
    - Dans MetaMask, ajoutez le réseau **Polygon Amoy** si besoin (Paramètres → Réseaux → Ajouter un réseau), puis vérifiez que le solde en POL (ou MATIC) a augmenté.  
@@ -107,7 +111,7 @@ Le contrat doit être déployé **une fois** sur le réseau que vous utilisez. S
      ```bash
      npx hardhat run scripts/deploy.js --network amoy
      ```
-6. À la fin du script, une ligne du type **« DocProof Proxy deployed to: 0x... »** s’affiche. **Copiez cette adresse** : c’est l’adresse du contrat à mettre dans l’app (étape 4).
+6. À la fin du script, une ligne du type **« DocProof Proxy deployed to: 0x... »** s’affiche. **Copiez cette adresse** (c’est l’adresse du **contrat**, pas celle de votre wallet). Vous la mettrez dans le **`.env` à la racine** du projet dans **`NEXT_PUBLIC_DOC_PROOF_CONTRACT_ADDRESS`** (étape 4 ci‑dessous).
 
 Référence Hardhat : [https://hardhat.org/docs](https://hardhat.org/docs)
 
@@ -117,14 +121,15 @@ De retour **à la racine** du projet (dossier `doc_proof_v1`), éditez le fichie
 
 | Variable | Exemple / valeur à mettre |
 |----------|---------------------------|
-| **`NEXT_PUBLIC_DOC_PROOF_CONTRACT_ADDRESS`** | L’adresse du contrat déployé à l’étape 3 (ex. `0x1234...abcd`). |
+| **`NEXT_PUBLIC_DOC_PROOF_CONTRACT_ADDRESS`** | L’adresse affichée à la fin du déploiement : **« DocProof Proxy deployed to: 0x... »** — copiez exactement cette adresse (ce n’est **pas** l’adresse de votre portefeuille MetaMask). |
 | **`NEXT_PUBLIC_CHAIN_ID`** | `80001` pour Mumbai, ou `80002` pour Amoy. |
 | **`POLYGON_MUMBAI_RPC_URL`** | Si Mumbai : `https://rpc.ankr.com/polygon_mumbai`. |
 | **`POLYGON_AMOY_RPC_URL`** | Si Amoy : `https://rpc-amoy.polygon.technology`. |
 | **`PRIVATE_KEY`** | La clé privée du wallet (avec ou sans `0x`). **Ne jamais commiter ce fichier.** |
 
 **Important** :  
-- Ne laissez **pas** `NEXT_PUBLIC_DOC_PROOF_CONTRACT_ADDRESS="0x..."` ni `PRIVATE_KEY="your-metamask-private-key"`.  
+- **`NEXT_PUBLIC_DOC_PROOF_CONTRACT_ADDRESS`** doit contenir **uniquement** l’adresse du contrat déployé (celle affichée par « DocProof Proxy deployed to: 0x... »), pas l’adresse de votre wallet.  
+- Ne laissez **pas** le placeholder `NEXT_PUBLIC_DOC_PROOF_CONTRACT_ADDRESS="0x..."` ni `PRIVATE_KEY="your-metamask-private-key"`.  
 - Sans adresse de contrat réelle, la vérification affichera toujours « Document introuvable ou révoqué » et « Émetteur : 0x0 ».  
 - Sans `PRIVATE_KEY` valide, les certifications ne seront pas enregistrées et les documents resteront en PENDING.  
 - Si vous déployez sur **Amoy** : mettez `NEXT_PUBLIC_CHAIN_ID="80002"` et `POLYGON_AMOY_RPC_URL="https://rpc-amoy.polygon.technology"` dans le `.env` à la racine (l’app utilise automatiquement l’RPC Amoy pour le chain ID 80002).
@@ -140,6 +145,8 @@ De retour **à la racine** du projet (dossier `doc_proof_v1`), éditez le fichie
 2. **Re-téléchargez un document** (ou uploadez un nouveau fichier). Avec un `.env` correct, le document doit passer en statut **CERTIFIED** et vous devez voir un hash de transaction blockchain.
 3. Allez sur **Vérifier**, collez le **hash du document** (format `0x...`) ou scannez le QR code.
 4. Vous devriez obtenir **« Document valide »** et un **Émetteur** qui est une adresse du type `0x1234...` (plus jamais `0x0` pour un document certifié sur la chaîne).
+
+// ----- A continuer avec la partie ci-dessous ---
 
 ### 6. Optionnel : IPFS (copie du document)
 
