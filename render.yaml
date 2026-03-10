@@ -5,10 +5,12 @@ services:
   - type: web
     runtime: node
     name: doc-proof
+    repo: https://github.com/Sergeo16/doc_proof_v1
+    branch: main
 
-    buildCommand: npm install && npm run build
+    buildCommand: "npm install && npm run build"
     startCommand: npm run start
-    preDeployCommand: npx prisma migrate deploy
+    preDeployCommand: "npx prisma migrate deploy"
 
     region: oregon
 
@@ -16,7 +18,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: REDIS_KEY_PREFIX
-        value: docproof:
+        value: "docproof:"
       - key: POLYGON_AMOY_RPC_URL
         value: https://rpc-amoy.polygon.technology
       - key: MAINTENANCE_MODE
