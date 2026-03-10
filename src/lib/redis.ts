@@ -1,11 +1,15 @@
 /**
  * DOC PROOF - Redis Client
  * Used for: caching, rate limiting, session storage
+ * REDIS_KEY_PREFIX: préfixe global pour éviter les collisions quand Redis est partagé (ex. prospects-app)
  */
 
 import Redis from "ioredis";
 
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
+
+/** Préfixe pour isoler les clés DOC PROOF (obligatoire si Redis partagé avec d'autres apps) */
+export const REDIS_KEY_PREFIX = process.env.REDIS_KEY_PREFIX || "docproof:";
 
 declare global {
   var redis: Redis | undefined;
@@ -22,9 +26,9 @@ redis.on("error", () => {}); // Suppress unhandled error during build
 
 if (process.env.NODE_ENV !== "production") global.redis = redis;
 
-export const RATE_LIMIT_PREFIX = "rl:";
-export const CACHE_PREFIX = "cache:";
-export const SESSION_PREFIX = "session:";
+export const RATE_LIMIT_PREFIX = `${REDIS_KEY_PREFIX}rl:`;
+export const CACHE_PREFIX = `${REDIS_KEY_PREFIX}cache:`;
+export const SESSION_PREFIX = `${REDIS_KEY_PREFIX}session:`;
 
 export async function rateLimit(
   key: string,

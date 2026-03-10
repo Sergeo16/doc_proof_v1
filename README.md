@@ -114,47 +114,86 @@ Le `.gitignore` doit exclure `node_modules/`, `.next/`, `.env`.
 
 **Default Admin**: admin@docproof.io / Admin123!
 
-## Déploiement sur Render (partage DB/Redis avec un autre projet)
+## Déploiement sur Render (partage DB/Redis avec prospects-app)
 
-Cette section décrit comment héberger DOC PROOF sur [Render](https://render.com) en **réutilisant** une base PostgreSQL et un Redis déjà présents dans le même workspace (par ex. partagés avec un projet comme `prospects-app`), afin de ne pas créer de services DB/Redis supplémentaires.
+Cette section décrit comment héberger DOC PROOF sur [Render](https://render.com) en **réutilisant** la base PostgreSQL (`prospects-db`) et Redis (`prospects-redis`) déjà présents dans le même workspace que `prospects-app`, **sans chevauchement des données**.
 
-### Prérequis
+### Ce qui est automatisé (`render.yaml`)
 
-- Un compte Render et un **Web Service** existant dans le workspace (ex. `prospects-app`).
-- Une **base PostgreSQL** (ex. `prospects-db`) et une **instance Redis/Key Value** (ex. `prospects-redis`) dans le même workspace.
-- Le dépôt DOC PROOF poussé sur GitHub.
+| Élément | Automatique |
+|---------|-------------|
+| Config Web Service (build, start, région) | ✅ |
+| Migrations Prisma à chaque déploiement | ✅ `preDeployCommand` |
+| JWT_SECRET (génération aléatoire) | ✅ |
+| REDIS_KEY_PREFIX, POLYGON_AMOY_RPC_URL | ✅ |
 
-### 1. Créer le Web Service DOC PROOF
+### Ce qui reste manuel
 
-1. Dans **My Workspace** (même workspace que l’app existante) : **New** → **Web Service**.
+- **Base `docproof`** : Render ne permet pas de créer une 2ᵉ base sur une instance existante via Blueprint.
+- **Secrets** : DATABASE_URL, REDIS_URL, PRIVATE_KEY… — saisis au premier déploiement (jamais dans Git).
+
+### Stratégie anti-chevauchement
+
+| Ressource | Méthode d'isolation | Détail |
+|-----------|--------------------|--------|
+| **PostgreSQL** | Base séparée | Créer une base `docproof` sur la même instance `prospects-db` (pas la base `prospects_v2`) |
+| **Redis** | Préfixe de clés | Variable `REDIS_KEY_PREFIX=docproof:` pour éviter toute collision avec prospects-app |
+
+Référence : [Render – Adding multiple databases](https://render.com/docs/postgresql-creating-connecting#adding-multiple-databases-to-a-single-instance).
+
+---
+
+### Étape 0 : Créer la base PostgreSQL `docproof`
+
+1. Ouvrir le service **prospects-db** dans le [Render Dashboard](https://dashboard.render.com).
+2. Onglet **Info** → section **Connections** → copier la **PSQL Command** (External).
+3. Exécuter localement la commande PSQL pour ouvrir une session sur l'instance.
+4. Créer la base dédiée :
+   ```sql
+   CREATE DATABASE docproof;
+   \q
+   ```
+5. La **Internal Database URL** pour DOC PROOF aura le même host/port/user/password, mais avec `/docproof` à la fin :
+   ```
+   postgresql://prospects_user:PASSWORD@dpg-d5ap9rpr0fns738fvr5g-a:5432/docproof
+   ```
+   (Remplacer `PASSWORD` par le mot de passe de prospects-db ; l'URL complète est visible dans l'onglet **Info** de prospects-db.)
+
+---
+
+### Étape 1 : Prérequis
+
+- Compte Render et workspace contenant `prospects-app`, `prospects-db`, `prospects-redis`.
+- Dépôt DOC PROOF poussé sur GitHub (ex. `Sergeo16/doc_proof_v1`).
+- Base `docproof` créée (étape 0).
+
+### Étape 2 : Déployer le Blueprint DOC PROOF
+
+1. **My Workspace** → **New** → **Blueprint**.
 2. Connecter le dépôt GitHub du projet DOC PROOF (ex. `Sergeo16/doc_proof_v1`).
-3. **Type** : Node.
-4. **Build Command** (ou laisser celui détecté par Render) :
-   ```bash
-   npm install && npm run build
-   ```
-5. **Start Command** :
-   ```bash
-   npm run start
-   ```
-6. **Instance** : Starter (ou supérieur selon besoin).
+3. Render détecte le fichier `render.yaml` à la racine.
+4. Cliquer sur **Apply** puis saisir les variables demandées (voir Étape 3). Build et migrations se lancent automatiquement.
 
-### 2. Variables d’environnement
+### Étape 3 : Variables d’environnement
 
-Dans l’onglet **Environment** du Web Service DOC PROOF, définir au minimum :
+Dans l’onglet **Environment** du Web Service DOC PROOF :
 
-#### Base de données et Redis (services existants)
+#### Base de données (base dédiée docproof)
 
-- **`DATABASE_URL`**  
-  Utiliser l’**Internal Database URL** de la base Postgres du workspace (onglet **Info** de la base).  
-  Si vous préférez une base dédiée à DOC PROOF sur la même instance, créer une base (ex. `doc_proof_v1`) et adapter l’URL en conséquence.
+- **`DATABASE_URL`** : URL **Internal** de prospects-db, base `docproof` :
+  ```
+  postgresql://prospects_user:VOTRE_MOT_DE_PASSE@dpg-d5ap9rpr0fns738fvr5g-a:5432/docproof
+  ```
+  (Copier l’Internal Database URL de prospects-db, remplacer `prospects_v2` par `docproof`.)
 
-- **`REDIS_URL`**  
-  Utiliser l’**Internal Key Value URL** du Redis/Valkey du workspace (ex. `redis://red-xxxxx:6379`).
+#### Redis (préfixe obligatoire si partagé)
+
+- **`REDIS_URL`** : Internal Key Value URL de prospects-redis (ex. `redis://red-d5ap9rhr0fns738fvr40:6379`).
+- **`REDIS_KEY_PREFIX`** : `docproof:` — **obligatoire** pour éviter les collisions avec prospects-app.
 
 #### Application et auth
 
-- **`JWT_SECRET`** : chaîne secrète forte (génération aléatoire recommandée).
+- **`JWT_SECRET`** : généré automatiquement par le Blueprint (pas besoin de le saisir).
 - **`NEXT_PUBLIC_APP_URL`** : URL publique du service DOC PROOF sur Render (ex. `https://doc-proof-app.onrender.com`).
 
 #### Blockchain (voir [GUIDE_UTILISATEUR.md](GUIDE_UTILISATEUR.md))
@@ -169,20 +208,22 @@ Dans l’onglet **Environment** du Web Service DOC PROOF, définir au minimum :
 - **`IPFS_PROVIDER`** : `pinata`
 - **`PINATA_API_KEY`** et **`PINATA_API_SECRET`**
 
-### 3. Premier déploiement et base de données
+### Étape 4 : Migrations et seed
 
-1. Déployer une première fois (Build peut échouer si les migrations ne sont pas exécutées).
-2. Exécuter les migrations Prisma **une fois** contre la base partagée :
-   - En local : pointer temporairement `.env` vers l’**Internal Database URL** Render, puis `npx prisma migrate deploy`.
-   - Ou utiliser un **Shell** Render sur le service DOC PROOF (si disponible) : `npx prisma migrate deploy`.
-3. Optionnel : lancer le seed : `npx prisma db seed`.
+- **Migrations** : exécutées automatiquement à chaque déploiement via `preDeployCommand` dans `render.yaml`.
+- **Seed optionnel** : Shell Render sur le service DOC PROOF → `npx prisma db seed`.
 
-### 4. Résumé des coûts
+### Étape 5 : Vérifications
 
-- **Pas de nouveau coût** pour PostgreSQL ni Redis si vous réutilisez les services existants.
-- **Un nouveau Web Service** (Starter ou plus) est facturé en plus ; la DB et le Redis restent partagés.
+- **prospects-app** → base `prospects_v2`, clés Redis sans préfixe → aucune collision.
+- **DOC PROOF** → base `docproof`, clés Redis préfixées `docproof:` → données isolées.
 
-### 5. Références Render
+### Étape 6 : Résumé des coûts
+
+- **Pas de nouveau coût** pour PostgreSQL ni Redis (réutilisation de prospects-db et prospects-redis).
+- **Un nouveau Web Service** (Starter ou plus) est facturé en plus.
+
+### Références Render
 
 - **Internal Database URL** : dans le service PostgreSQL → onglet **Info** → **Internal Database URL**.
 - **Internal Key Value URL** : dans le service Redis/Valkey → onglet **Info** → **Internal Key Value URL**.
@@ -217,6 +258,7 @@ doc_proof_v1/
 │   └── store/            # Zustand
 ├── Dockerfile
 ├── docker-compose.yml
+├── render.yaml         # Blueprint Render (déploiement automatisé)
 └── DEPLOYMENT.md
 ```
 

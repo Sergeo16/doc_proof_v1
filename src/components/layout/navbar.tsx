@@ -34,7 +34,10 @@ export function Navbar({ locale, session }: NavbarProps) {
       className="navbar glass-card sticky top-0 z-50"
     >
       <div className="navbar-start">
-        <Link href="/" className="btn btn-ghost text-xl font-bold gradient-text">
+        <Link
+          href="/"
+          className="btn btn-ghost text-xl logo-docproof tracking-tight hover:opacity-90"
+        >
           DOC PROOF
         </Link>
       </div>
