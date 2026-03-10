@@ -1,23 +1,18 @@
 # DOC PROOF - Render Blueprint
-# Partage DB/Redis avec prospects-app (base docproof, préfixe docproof:)
-# Référence : https://render.com/docs/blueprint-spec
+# Partage DB/Redis avec prospects-app (base docproof, prefixe docproof:)
 
 services:
   - type: web
     runtime: node
     name: doc-proof
 
-    # Build & deploy
     buildCommand: npm install && npm run build
     startCommand: npm run start
     preDeployCommand: npx prisma migrate deploy
 
-    # Même région que prospects-db et prospects-redis (réseau interne)
     region: oregon
-    plan: starter
 
     envVars:
-      # === Automatique ===
       - key: JWT_SECRET
         generateValue: true
       - key: REDIS_KEY_PREFIX
@@ -29,24 +24,15 @@ services:
       - key: IPFS_GATEWAY
         value: https://ipfs.io/ipfs
 
-      # === À saisir au premier déploiement (sync: false) ===
-      # DATABASE_URL : Internal URL de prospects-db, base docproof
-      #   Ex: postgresql://prospects_user:PASSWORD@dpg-xxx-a:5432/docproof
       - key: DATABASE_URL
         sync: false
-      # REDIS_URL : Internal Key Value URL de prospects-redis
-      #   Ex: redis://red-xxx:6379
       - key: REDIS_URL
         sync: false
-      # URL publique du service (ex: https://doc-proof-app.onrender.com)
       - key: NEXT_PUBLIC_APP_URL
         sync: false
-      # Blockchain (obligatoire pour la certification)
       - key: PRIVATE_KEY
         sync: false
       - key: NEXT_PUBLIC_DOC_PROOF_CONTRACT_ADDRESS
         sync: false
       - key: NEXT_PUBLIC_CHAIN_ID
         sync: false
-
-      # IPFS : ajouter PINATA_API_KEY, PINATA_API_SECRET manuellement si besoin
