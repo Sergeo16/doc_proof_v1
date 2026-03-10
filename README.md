@@ -114,6 +114,81 @@ Le `.gitignore` doit exclure `node_modules/`, `.next/`, `.env`.
 
 **Default Admin**: admin@docproof.io / Admin123!
 
+## Déploiement sur Render (partage DB/Redis avec un autre projet)
+
+Cette section décrit comment héberger DOC PROOF sur [Render](https://render.com) en **réutilisant** une base PostgreSQL et un Redis déjà présents dans le même workspace (par ex. partagés avec un projet comme `prospects-app`), afin de ne pas créer de services DB/Redis supplémentaires.
+
+### Prérequis
+
+- Un compte Render et un **Web Service** existant dans le workspace (ex. `prospects-app`).
+- Une **base PostgreSQL** (ex. `prospects-db`) et une **instance Redis/Key Value** (ex. `prospects-redis`) dans le même workspace.
+- Le dépôt DOC PROOF poussé sur GitHub.
+
+### 1. Créer le Web Service DOC PROOF
+
+1. Dans **My Workspace** (même workspace que l’app existante) : **New** → **Web Service**.
+2. Connecter le dépôt GitHub du projet DOC PROOF (ex. `Sergeo16/doc_proof_v1`).
+3. **Type** : Node.
+4. **Build Command** (ou laisser celui détecté par Render) :
+   ```bash
+   npm install && npm run build
+   ```
+5. **Start Command** :
+   ```bash
+   npm run start
+   ```
+6. **Instance** : Starter (ou supérieur selon besoin).
+
+### 2. Variables d’environnement
+
+Dans l’onglet **Environment** du Web Service DOC PROOF, définir au minimum :
+
+#### Base de données et Redis (services existants)
+
+- **`DATABASE_URL`**  
+  Utiliser l’**Internal Database URL** de la base Postgres du workspace (onglet **Info** de la base).  
+  Si vous préférez une base dédiée à DOC PROOF sur la même instance, créer une base (ex. `doc_proof_v1`) et adapter l’URL en conséquence.
+
+- **`REDIS_URL`**  
+  Utiliser l’**Internal Key Value URL** du Redis/Valkey du workspace (ex. `redis://red-xxxxx:6379`).
+
+#### Application et auth
+
+- **`JWT_SECRET`** : chaîne secrète forte (génération aléatoire recommandée).
+- **`NEXT_PUBLIC_APP_URL`** : URL publique du service DOC PROOF sur Render (ex. `https://doc-proof-app.onrender.com`).
+
+#### Blockchain (voir [GUIDE_UTILISATEUR.md](GUIDE_UTILISATEUR.md))
+
+- **`PRIVATE_KEY`** : clé privée du wallet (certification).
+- **`NEXT_PUBLIC_DOC_PROOF_CONTRACT_ADDRESS`** : adresse du contrat déployé.
+- **`NEXT_PUBLIC_CHAIN_ID`** : `80002` (Amoy) ou `80001` (Mumbai).
+- **`POLYGON_AMOY_RPC_URL`** (ou `POLYGON_MUMBAI_RPC_URL`) : URL RPC du testnet/mainnet.
+
+#### Optionnel : IPFS (Pinata)
+
+- **`IPFS_PROVIDER`** : `pinata`
+- **`PINATA_API_KEY`** et **`PINATA_API_SECRET`**
+
+### 3. Premier déploiement et base de données
+
+1. Déployer une première fois (Build peut échouer si les migrations ne sont pas exécutées).
+2. Exécuter les migrations Prisma **une fois** contre la base partagée :
+   - En local : pointer temporairement `.env` vers l’**Internal Database URL** Render, puis `npx prisma migrate deploy`.
+   - Ou utiliser un **Shell** Render sur le service DOC PROOF (si disponible) : `npx prisma migrate deploy`.
+3. Optionnel : lancer le seed : `npx prisma db seed`.
+
+### 4. Résumé des coûts
+
+- **Pas de nouveau coût** pour PostgreSQL ni Redis si vous réutilisez les services existants.
+- **Un nouveau Web Service** (Starter ou plus) est facturé en plus ; la DB et le Redis restent partagés.
+
+### 5. Références Render
+
+- **Internal Database URL** : dans le service PostgreSQL → onglet **Info** → **Internal Database URL**.
+- **Internal Key Value URL** : dans le service Redis/Valkey → onglet **Info** → **Internal Key Value URL**.
+
+Ces URLs ne sont accessibles qu’aux services du même workspace Render (réseau interne).
+
 ## Project Structure
 
 ```

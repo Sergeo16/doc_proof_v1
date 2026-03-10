@@ -1,0 +1,113 @@
+{
+  "app": {
+    "name": "DOC PROOF",
+    "tagline": "Blockchain-Dokumentenzertifizierungsplattform",
+    "heroDescription": "Blockchain-Zertifizierung für Behörden, Universitäten, Banken und internationale Institutionen. Unveränderlicher Nachweis der Dokumentenintegrität auf Polygon.",
+    "certifyDocument": "Dokument zertifizieren",
+    "verifyDocument": "Dokument prüfen",
+    "documentHash": "Dokumenten-Hash",
+    "certified": "Zertifiziert"
+  },
+  "nav": {
+    "home": "Start",
+    "upload": "Dokument hochladen",
+    "verify": "Prüfen",
+    "dashboard": "Dashboard",
+    "admin": "Verwaltung",
+    "settings": "Einstellungen",
+    "logout": "Abmelden",
+    "login": "Anmelden",
+    "register": "Registrieren"
+  },
+  "upload": {
+    "title": "Dokument hochladen",
+    "dropzone": "Dokument hier ablegen oder klicken zum Durchsuchen",
+    "processing": "Dokument wird verarbeitet...",
+    "generatingHash": "Hash wird erstellt...",
+    "uploadingIpfs": "Hochladen zu IPFS...",
+    "registeringChain": "Registrierung auf der Blockchain...",
+    "success": "Dokument erfolgreich zertifiziert!",
+    "error": "Hochladen fehlgeschlagen"
+  },
+  "verify": {
+    "title": "Dokument prüfen",
+    "subtitle": "Dokumenten-Hash eingeben oder QR-Code scannen",
+    "hashPlaceholder": "Dokumenten-Hash einfügen (0x...)",
+    "verify": "Prüfen",
+    "valid": "Dokument ist zertifiziert und gültig",
+    "invalid": "Dokument nicht gefunden oder widerrufen",
+    "issuer": "Aussteller",
+    "timestamp": "Zertifiziert am",
+    "blockchain": "Auf Blockchain anzeigen"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "myDocuments": "Meine Dokumente",
+    "recentVerifications": "Letzte Prüfungen",
+    "analytics": "Analysen",
+    "uploadCardDesc": "Neues Dokument auf der Blockchain zertifizieren",
+    "verifyCardDesc": "Dokumentenintegrität per Hash prüfen",
+    "adminCardTitle": "Admin-Bereich",
+    "adminCardDesc": "Super-Admin-Steuerzentrale",
+    "noDocumentsYet": "Noch keine Dokumente. Laden Sie das erste hoch!",
+    "noVerificationsYet": "Noch keine Prüfungen",
+    "file": "Datei",
+    "status": "Status",
+    "hash": "Hash",
+    "valid": "Gültig",
+    "invalid": "Ungültig"
+  },
+  "admin": {
+    "maintenance": "Wartungsmodus",
+    "organizations": "Organisationen",
+    "users": "Benutzer",
+    "blockchain": "Blockchain-Konfiguration",
+    "analytics": "Analysen",
+    "fraudReports": "KI-Betrugsberichte",
+    "themeDefaults": "Standarddesigns",
+    "languages": "Sprachen",
+    "suspendUser": "Benutzer sperren",
+    "documents": "Dokumente",
+    "dashboardTitle": "Super-Admin-Dashboard",
+    "recentAuditLogs": "Letzte Prüfprotokolle",
+    "action": "Aktion",
+    "resource": "Ressource",
+    "user": "Benutzer",
+    "time": "Zeit"
+  },
+  "theme": {
+    "selectTheme": "Darstellung",
+    "dark": "Dunkel",
+    "retro": "Retro",
+    "cyberpunk": "Cyberpunk",
+    "coffee": "Kaffee",
+    "valentine": "Valentin",
+    "business": "Business",
+    "light": "Hell"
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Ein Fehler ist aufgetreten",
+    "success": "Erfolg",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "download": "Herunterladen",
+    "copy": "Kopieren",
+    "qrCode": "QR-Code"
+  },
+  "auth": {
+    "email": "E-Mail",
+    "password": "Passwort",
+    "nameOptional": "Name (optional)",
+    "passwordHint": "Passwort (min. 8 Zeichen, 1 Großbuchstabe)",
+    "emailPlaceholder": "sie@beispiel.de",
+    "passwordPlaceholder": "••••••••",
+    "namePlaceholder": "Max Mustermann",
+    "loginFailed": "Anmeldung fehlgeschlagen",
+    "registrationFailed": "Registrierung fehlgeschlagen",
+    "noAccount": "Noch kein Konto?",
+    "alreadyHaveAccount": "Bereits ein Konto?"
+  }
+}

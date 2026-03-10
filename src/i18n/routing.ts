@@ -2,7 +2,7 @@ import { defineRouting } from "next-intl/routing";
 import { createNavigation } from "next-intl/navigation";
 
 export const routing = defineRouting({
-  locales: ["en", "fr", "zh", "ar", "es"],
+  locales: ["en", "fr", "de", "zh", "ar", "es"],
   defaultLocale: "en",
   localePrefix: "always",
   localeDetection: true,
@@ -14,7 +14,7 @@ export const routing = defineRouting({
 
 export const { usePathname, useRouter, Link } = createNavigation(routing);
 
-const LOCALES = ["en", "fr", "zh", "ar", "es"];
+const LOCALES = ["en", "fr", "de", "zh", "ar", "es"];
 
 /**
  * Retire le préfixe de locale du pathname pour éviter /fr/fr.

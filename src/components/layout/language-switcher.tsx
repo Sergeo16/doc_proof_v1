@@ -7,6 +7,7 @@ import { useRef } from "react";
 const LANGUAGES = [
   { code: "en" as const, label: "English" },
   { code: "fr" as const, label: "Français" },
+  { code: "de" as const, label: "Deutsch" },
   { code: "zh" as const, label: "中文" },
   { code: "ar" as const, label: "العربية" },
   { code: "es" as const, label: "Español" },
