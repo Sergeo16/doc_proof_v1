@@ -3,8 +3,9 @@
 import { useTheme } from "@/components/providers/theme-provider";
 import { useTranslations } from "next-intl";
 import { useEffect, useState, useRef } from "react";
+import type { ThemeId } from "@/lib/theme-constants";
 
-const THEMES = [
+const THEMES: { id: ThemeId; color: string }[] = [
   { id: "dark", color: "bg-neutral" },
   { id: "light", color: "bg-base-100" },
 ];
@@ -17,7 +18,7 @@ export function ThemeSwitcher() {
 
   useEffect(() => setMounted(true), []);
 
-  const handleThemeChange = (tId: string) => {
+  const handleThemeChange = (tId: ThemeId) => {
     setTheme(tId);
     (document.activeElement as HTMLElement)?.blur();
     toggleRef.current?.blur();
