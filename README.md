@@ -145,19 +145,45 @@ Référence : [Render – Adding multiple databases](https://render.com/docs/pos
 
 ### Étape 0 : Créer la base PostgreSQL `docproof`
 
-1. Ouvrir le service **prospects-db** dans le [Render Dashboard](https://dashboard.render.com).
-2. Onglet **Info** → section **Connections** → copier la **PSQL Command** (External).
-3. Exécuter localement la commande PSQL pour ouvrir une session sur l'instance.
-4. Créer la base dédiée :
-   ```sql
-   CREATE DATABASE docproof;
-   \q
-   ```
-5. La **Internal Database URL** pour DOC PROOF aura le même host/port/user/password, mais avec `/docproof` à la fin :
-   ```
-   postgresql://prospects_user:PASSWORD@dpg-d5ap9rpr0fns738fvr5g-a:5432/docproof
-   ```
-   (Remplacer `PASSWORD` par le mot de passe de prospects-db ; l'URL complète est visible dans l'onglet **Info** de prospects-db.)
+Ouvrir le service **prospects-db** dans le [Render Dashboard](https://dashboard.render.com) → **Info** → copier l’**Internal Database URL**.
+
+Choisir une des méthodes suivantes :
+
+#### Option A : Docker (sans installer psql)
+
+```bash
+docker run -it --rm postgres:16-alpine psql "postgresql://prospects_user:PASSWORD@dpg-xxx-a.oregon-postgres.render.com/prospects_v2" -c "CREATE DATABASE docproof;"
+```
+
+Remplacer l’URL par celle de prospects-db (Internal Database URL, base `prospects_v2`).
+
+#### Option B : psql installé localement
+
+```bash
+psql "postgresql://prospects_user:PASSWORD@dpg-xxx-a.oregon-postgres.render.com/prospects_v2"
+```
+
+Puis dans la session :
+```sql
+CREATE DATABASE docproof;
+\q
+```
+
+> Si `psql` n’est pas installé : `brew install libpq` puis `brew link --force libpq`.
+
+#### Option C : Render Shell
+
+Si Render propose un **Shell** pour prospects-db : y ouvrir une session et exécuter :
+```bash
+psql $DATABASE_URL -c "CREATE DATABASE docproof;"
+```
+
+#### URL pour DOC PROOF
+
+L’**Internal Database URL** pour DOC PROOF est la même que prospects-db, avec `/docproof` à la fin (au lieu de `/prospects_v2`) :
+```
+postgresql://prospects_user:PASSWORD@dpg-xxx-a.oregon-postgres.render.com/docproof
+```
 
 ---
 
