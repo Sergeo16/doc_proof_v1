@@ -4,13 +4,16 @@ import * as bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  const superAdminHash = await bcrypt.hash("Admin123!", 12);
+  const adminEmail = process.env.ADMIN_EMAIL || "admin@docproof.io";
+  const adminPassword = process.env.ADMIN_PASSWORD || "Admin123!";
+
+  const superAdminHash = await bcrypt.hash(adminPassword, 12);
 
   const superAdmin = await prisma.user.upsert({
-    where: { email: "admin@docproof.io" },
+    where: { email: adminEmail },
     update: {},
     create: {
-      email: "admin@docproof.io",
+      email: adminEmail,
       passwordHash: superAdminHash,
       name: "Super Admin",
       role: "SUPER_ADMIN",
@@ -54,7 +57,7 @@ async function main() {
     update: {},
     create: {
       key: "supported_languages",
-      value: ["en", "fr", "zh", "ar", "es"],
+      value: ["en", "fr", "de", "zh", "ar", "es"],
       description: "Supported locales",
     },
   });
